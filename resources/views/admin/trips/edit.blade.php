@@ -56,6 +56,11 @@
                                   <i class="la la-file-image-o"></i> Sliders
                               </a>
                           </li>
+                          <li class="nav-item">
+                              <a class="nav-link" data-toggle="tab" href="#kt_tabs_1_7">
+                                  <i class="la la-file-image-o"></i> Gallery
+                              </a>
+                          </li>
                       </ul>
 
 
@@ -485,7 +490,7 @@
                             </form>
                           </div>
 
-                          {{-- Galleries --}}
+                          {{-- sliders --}}
                           <div class="tab-pane" data-index="6" id="kt_tabs_1_6" role="tabpanel">
                             <div class="mb-3">
                               <button type="button" class="btn btn-bold btn-label-brand btn-sm pull-right" data-backdrop="static" data-toggle="modal" data-target="#kt_modal_4">Add Image</button>
@@ -513,6 +518,44 @@
                                                 <i class="la la-edit"></i>
                                             </a>
                                           <button class="btn btn-sm btn-clean btn-icon btn-icon-md kt_sweetalert_delete_image" data-id="{{ $gallery->id }}" title="Delete">
+                                            <i class="la la-trash"></i>
+                                          </button>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                  @else
+                                  <tr>
+                                      <td colspan="5">No sliders.</td>
+                                  </tr>
+                                  @endif
+                                </tbody>
+                            </table>
+                          </div>
+
+                          {{-- gallery --}}
+                          <div class="tab-pane" data-index="6" id="kt_tabs_1_7" role="tabpanel">
+                            <div class="mb-3">
+                              <button type="button" class="btn btn-bold btn-label-brand btn-sm pull-right" data-backdrop="static" data-toggle="modal" data-target="#kt_modal_5">Add Image</button>
+                            </div>
+                            <table id="gallery-table" class="table table-striped">
+                                <thead>
+                                  <tr>
+                                      <th>#</th>
+                                      <th>Image</th>
+                                      <th>Action</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  @if(iterator_count($trip->trip_sliders))
+                                    @foreach($trip->trip_sliders as $key => $slider)
+                                    <tr>
+                                        <th scope="row">{{ $key + 1 }}</th>
+                                        <td><img class="tbl-img" width="100" style="width: 200px;" src="{{ $slider->imageUrl }}"></td>
+                                        <td>
+                                            <a href="{{ route('admin.trips.gallery.edit', $slider->id) }}" class="btn btn-sm btn-clean btn-icon btn-icon-md" title="Edit details">
+                                                <i class="la la-edit"></i>
+                                            </a>
+                                          <button class="btn btn-sm btn-clean btn-icon btn-icon-md kt_sweetalert_delete_image_slider" data-id="{{ $slider->id }}" title="Delete">
                                             <i class="la la-trash"></i>
                                           </button>
                                         </td>
@@ -588,6 +631,41 @@
     </div>
 </div>
 <!--end::Modal-->
+
+{{-- gallery --}}
+<div class="modal fade" id="kt_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Gallery</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                </button>
+            </div>
+            <form class="kt-form" id="add-image-gallery" enctype="multipart/form-data">
+              {{ csrf_field() }}
+              <div class="modal-body">
+                <input type="hidden" name="trip_id" value="{{ $trip->id }}">
+                <div class="form-group">
+                    <label for="">Gallery</label>
+                    <div class="row">
+                      <div class="col-lg-7">
+                        <input type="file" name="gallery" style="display: block;" accept="image/x-png,image/gif,image/jpeg" id="">
+                      </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="recipient-name" class="form-control-label">Alt Tag</label>
+                    <input type="text" name="alt_tag" class="form-control">
+                </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Upload</button>
+              </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
 @push('scripts')
 <script src="./assets/vendors/general/summernote/dist/summernote.js" type="text/javascript"></script>
@@ -1095,6 +1173,25 @@ $(function() {
       }
     });
 
+    $("#add-image-gallery").validate({
+      ignore: "",
+      submitHandler: function(form, event) {
+        event.preventDefault();
+        handleTripGalleryForm(form);
+      },
+      rules: {
+        gallery: {
+          required: true,
+          extension: "jpeg|jpg|png|gif"
+        }
+      },
+      messages: {
+        gallery: {
+          extension: "Only image files is allowed."
+        }
+      }
+    });
+
     function handleTripImageImageForm(form) {
       var form = $(form);
       $(form).find('button[type=submit]').attr('disabled', true).html('Uploading...');
@@ -1116,6 +1213,28 @@ $(function() {
                 toastr.success(res.message);
                 loadGalleries();
                 resetAddImageForm();
+              }
+          }
+      });
+    }
+
+    function handleTripGalleryForm(form) {
+      var form = $(form);
+      $(form).find('button[type=submit]').attr('disabled', true).html('Uploading...');
+      var formData = new FormData(form[0]);
+
+      $.ajax({
+          url: "{{ route('admin.trips.sliders.store') }}",
+          type: 'POST',
+          data: formData,
+          dataType: 'json',
+          processData: false,
+          contentType: false,
+          async: false,
+          success: function(res) {
+              if (res.status === 1) {
+                toastr.success(res.message);
+                window.location.reload();
               }
           }
       });
@@ -1223,6 +1342,36 @@ $(function() {
                   type: 'success',
                   title: 'The image has been deleted.'
                 })
+              }
+            })
+          }
+      });
+    });
+
+    $(document).on('click', '.kt_sweetalert_delete_image_slider', function(event) {
+      var e = $(this);
+
+      swal.fire({
+          title: 'Are you sure you want to delete this?',
+          // text: "You won't be able to revert this!",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes'
+      }).then(function(result) {
+          if (result.value) {
+            var id = e.attr('data-id');
+            var action_url = '{{ url('') }}' + '/admin/trip/slider/delete/' + id;
+            $.ajax({
+              url: action_url,
+              type: "DELETE",
+              dataType: "json",
+              async: "false",
+              success: function(res) {
+                Toast.fire({
+                  type: 'success',
+                  title: 'The image has been deleted.'
+                })
+                window.location.reload();
               }
             })
           }

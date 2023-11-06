@@ -121,6 +121,22 @@ var KTDatatableJsonRemoteDemo = function () {
                     },
                 },
                 {
+                    field: 'block_4',
+                    title: 'Block 4',
+                    template: function (item) {
+                        return '\
+						<div class="col-3">\
+						  <span class="kt-switch kt-switch--sm kt-switch--icon">\
+						  <label>\
+						  <input type="checkbox" data-id="'+ item.id + '" ' + ((item.block_4 == 1) ? "checked" : "") + ' id="block4Switch" value="1" name="show_status">\
+						  <span></span>\
+						  </label>\
+						  </span>\
+						</div>\
+					';
+                    },
+                },
+                {
                     field: 'Actions',
                     title: 'Actions',
                     sortable: false,
@@ -181,6 +197,23 @@ var KTDatatableJsonRemoteDemo = function () {
         $(document).on('change', '#block3Switch', function (e) {
             var id = $(this).data('id');
             var action_url = url + '/admin/trips/update-block3/' + id;
+            $.ajax({
+                url: action_url,
+                type: "GET",
+                dataType: "json",
+                async: "false",
+                success: function (res) {
+                    Toast.fire({
+                        type: 'success',
+                        title: res.message
+                    })
+                }
+            })
+        });
+
+        $(document).on('change', '#block4Switch', function (e) {
+            var id = $(this).data('id');
+            var action_url = url + '/admin/trips/update-block4/' + id;
             $.ajax({
                 url: action_url,
                 type: "GET",

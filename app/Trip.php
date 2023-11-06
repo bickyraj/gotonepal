@@ -88,6 +88,11 @@ class Trip extends Model
         return $this->hasMany(TripGallery::class);
     }
 
+    public function trip_sliders()
+    {
+        return $this->hasMany(TripSlider::class);
+    }
+
     public function getImageUrlAttribute()
     {
         if (count($this->trip_galleries) > 0) {

@@ -157,10 +157,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 	Route::post('trips/galleries', 'TripController@storeTripGallery')->name('trips.galleries.store');
 	Route::get('trips/{trip_id}/galleries', 'TripController@getAllTripGallery')->name('trips.galleries.get-all-galleries');
 	Route::delete('trip/gallery/delete/{id}', 'TripController@deleteTripImage')->name('trips.galleries.delete');
+
+    Route::get('trips/slider/edit/{id}', 'TripSliderController@editSlider')->name('trips.gallery.edit');
+	Route::post('trips/sliders/update', 'TripSliderController@updateTripSlider')->name('trips.sliders.update');
+	Route::post('trips/sliders', 'TripSliderController@storeTripGallery')->name('trips.sliders.store');
+	Route::get('trips/{trip_id}/sliders', 'TripSliderController@getAllTripGallery')->name('trips.sliders.get-all-sliders');
+	Route::delete('trip/slider/delete/{id}', 'TripSliderController@deleteTripImage')->name('trips.sliders.delete');
+
 	Route::get('/trips/update-feature/{id}', 'TripController@updateFeaturedStatus');
 	Route::get('/trips/update-block1/{id}', 'TripController@updateBlock1Status');
 	Route::get('/trips/update-block2/{id}', 'TripController@updateBlock2Status');
 	Route::get('/trips/update-block3/{id}', 'TripController@updateBlock3Status');
+	Route::get('/trips/update-block4/{id}', 'TripController@updateBlock4Status');
 
 	Route::get('trips/add', 'TripController@create')->name('trips.add');
 	Route::get('trips/list', 'TripController@tripList');

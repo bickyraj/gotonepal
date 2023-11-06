@@ -783,7 +783,7 @@ class TripController extends Controller
                 ['name', 'LIKE', "%" . $keyword . "%"]
             ]);
         }
-        $trips = $query->select('id', 'name', 'slug', 'block_1', 'block_2', 'block_3')->paginate(10, ['id', 'name', 'slug', 'block_1', 'block_2', 'block_3'], 'page', $request->pagination['page'])->toArray();
+        $trips = $query->select('id', 'name', 'slug', 'block_1', 'block_2', 'block_3', 'block_4')->paginate(10, ['id', 'name', 'slug', 'block_1', 'block_2', 'block_3', 'block_4'], 'page', $request->pagination['page'])->toArray();
         return response()->json([
             'data' => $trips['data'],
             'meta' => [
@@ -931,6 +931,35 @@ class TripController extends Controller
                 $success = true;
             }
 
+        } else {
+            $message = __('alerts.not_found_error');
+        }
+
+        return response()->json([
+            'data' => [],
+            'success' => $success,
+            'message' => $message
+        ]);
+    }
+
+    public function updateBlock4Status($id)
+    {
+        $success = false;
+        $message = "";
+
+        $trip = Trip::find($id);
+
+        if ($trip) {
+            if ($trip->block_4 == 1) {
+                $trip->block_4 = 0;
+            } else {
+                $trip->block_4 = 1;
+            }
+
+            if ($trip->save()) {
+                $message = "Trip has been featured.";
+                $success = true;
+            }
         } else {
             $message = __('alerts.not_found_error');
         }
