@@ -11,12 +11,12 @@ if (session()->has('error_message')) {
 }
 ?>
 @extends('layouts.front_inner')
-@section('meta_og_title'){!! $trip->trip_seo->meta_title ?? '' !!}@stop
+@section('meta_og_title'){!! trim($trip->trip_seo->meta_title) !== '' ? $trip->trip_seo->meta_title : $trip->name !!}@stop
 @section('meta_description'){!! $trip->trip_seo->meta_description ?? '' !!}@stop
 @section('meta_keywords'){!! $trip->trip_seo->meta_keywords ?? '' !!}@stop
-@section('meta_og_url'){!! $trip->trip_seo->canonical_url ?? '' !!}@stop
+@section('meta_og_url'){!! trim($trip->trip_seo->canonical_url) !== '' ? $trip->trip_seo->canonical_url : route('front.trips.show', $trip->slug) !!}@stop
 @section('meta_og_description'){!! $trip->trip_seo->meta_description ?? '' !!}@stop
-@section('meta_og_image'){!! $trip->trip_seo->ogImageUrl ?? '' !!}@stop
+@section('meta_og_image'){!! $trip->trip_seo->ogImageUrl !== '' ? $trip->trip_seo->ogImageUrl : $trip->imageUrl !!}@stop
     @push('styles')
         <script src="https://www.google.com/recaptcha/api.js?onload=CaptchaCallback&render=explicit" async defer></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.23/dist/fancybox/fancybox.min.css">
@@ -78,7 +78,7 @@ if (session()->has('error_message')) {
             @if (iterator_count($trip->trip_galleries))
                 @foreach ($trip->trip_galleries as $gallery)
                     <div class="slide">
-                        <img src="{{ $gallery->imageUrl }}" class="block w-full object-cover h-96 md:h-[36rem] lg:h-[48rem]" alt="">
+                        <img src="{{ $gallery->imageUrl }}" class="block w-full object-cover h-96 md:h-[36rem] lg:h-[40rem]" alt="">
                     </div>
                 @endforeach
             @endif
@@ -149,7 +149,7 @@ if (session()->has('error_message')) {
                 <nav class="flex items-center justify-center tour-details-tabs" id="secondnav">
                     <ul class="flex flex-wrap bg-white nav">
                         <li class="border-l border-r border-light">
-                            <a href="#overview" class="flex flex-col items-center gap-1 px-4 py-2 lg:px-10 hover:bg-accent hover:text-white group">
+                            <a href="#overview" class="flex flex-col items-center gap-1 px-4 py-2 lg:px-6 hover:bg-accent hover:text-white group">
                                 <svg class="w-6 h-6 text-gray group-hover:text-white">
                                     <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#viewgrid" />
                                 </svg>
@@ -159,7 +159,7 @@ if (session()->has('error_message')) {
 
                         @if (!$trip->trip_itineraries->isEmpty())
                             <li class="border-r border-light">
-                                <a href="#itinerary" class="flex flex-col items-center gap-1 px-4 py-2 lg:px-10 hover:bg-accent hover:text-white group">
+                                <a href="#itinerary" class="flex flex-col items-center gap-1 px-4 py-2 lg:px-6 hover:bg-accent hover:text-white group">
                                     <svg class="w-6 h-6 text-gray group-hover:text-white">
                                         <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#clock" />
                                     </svg>
@@ -168,9 +168,23 @@ if (session()->has('error_message')) {
                             </li>
                         @endif
 
+                        @if (iterator_count($trip->trip_sliders))
+                            <li class="border-r border-light">
+                                <a href="#gallery" class="flex flex-col items-center gap-1 px-4 py-2 lg:px-6 hover:bg-accent hover:text-white group">
+                                    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" class="w-6 h-6 text-gray group-hover:text-white" xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z">
+                                        </path>
+                                    </svg>
+                                    <span class="hidden text-sm md:block">Gallery</span>
+                                </a>
+                            </li>
+                        @endif
+
                         @if ($trip->trip_include_exclude)
                             <li class="border-r border-light">
-                                <a href="#inclusions" class="flex flex-col items-center gap-1 px-4 py-2 lg:px-10 hover:bg-accent hover:text-white group">
+                                <a href="#inclusions" class="flex flex-col items-center gap-1 px-4 py-2 lg:px-6 hover:bg-accent hover:text-white group">
                                     <svg class="w-6 h-6 text-gray group-hover:text-white">
                                         <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#archive" />
                                     </svg>
@@ -181,7 +195,7 @@ if (session()->has('error_message')) {
 
                         @if (!$trip->trip_departures->isEmpty())
                             <li class="border-r border-light">
-                                <a href="#date-price" class="flex flex-col items-center gap-1 px-4 py-2 lg:px-10 hover:bg-accent hover:text-white group">
+                                <a href="#date-price" class="flex flex-col items-center gap-1 px-4 py-2 lg:px-6 hover:bg-accent hover:text-white group">
                                     <svg class="w-6 h-6 text-gray group-hover:text-white">
                                         <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#calendar" />
                                     </svg>
@@ -191,7 +205,7 @@ if (session()->has('error_message')) {
                         @endif
 
                         <li class="border-r border-light">
-                            <a href="#reviews" class="flex flex-col items-center gap-1 px-4 py-2 lg:px-10 hover:bg-accent hover:text-white group">
+                            <a href="#reviews" class="flex flex-col items-center gap-1 px-4 py-2 lg:px-6 hover:bg-accent hover:text-white group">
                                 <svg class="w-6 h-6 text-gray group-hover:text-white">
                                     <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#chat" />
                                 </svg>
@@ -201,7 +215,7 @@ if (session()->has('error_message')) {
 
                         @if ($trip->trip_seo->about_leader)
                             <li class="border-r border-light">
-                                <a href="#equipment-list" class="flex flex-col items-center gap-1 px-4 py-2 lg:px-10 hover:bg-accent hover:text-white group">
+                                <a href="#equipment-list" class="flex flex-col items-center gap-1 px-4 py-2 lg:px-6 hover:bg-accent hover:text-white group">
                                     <svg class="w-6 h-6 text-gray group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                         aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -215,7 +229,7 @@ if (session()->has('error_message')) {
 
                         @if (!$trip->trip_faqs->isEmpty())
                             <li class="border-r border-white">
-                                <a href="#faqs" class="flex flex-col items-center gap-1 px-4 py-2 lg:px-10 hover:bg-accent hover:text-white group">
+                                <a href="#faqs" class="flex flex-col items-center gap-1 px-4 py-2 lg:px-6 hover:bg-accent hover:text-white group">
                                     <svg class="w-6 h-6 text-gray group-hover:text-white">
                                         <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#questionmarkcircle" />
                                     </svg>
@@ -259,7 +273,7 @@ if (session()->has('error_message')) {
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="text-sm font-bold text-gray">
+                                        <div class="font-bold text-gray-500">
                                             Duration
                                         </div>
                                         <div>
@@ -275,7 +289,7 @@ if (session()->has('error_message')) {
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="text-sm font-bold text-gray">
+                                        <div class="font-bold text-gray-500">
                                             Max. Elevation
                                         </div>
                                         <div>
@@ -291,7 +305,7 @@ if (session()->has('error_message')) {
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="text-sm font-bold text-gray">
+                                        <div class="font-bold text-gray-500 text">
                                             Group size
                                         </div>
                                         <div>
@@ -307,7 +321,7 @@ if (session()->has('error_message')) {
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="text-sm font-bold text-gray">
+                                        <div class="font-bold text-gray-500">
                                             Level
                                         </div>
                                         <div>
@@ -323,7 +337,7 @@ if (session()->has('error_message')) {
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="text-sm font-bold text-gray">
+                                        <div class="font-bold text-gray-500">
                                             Transportation
                                         </div>
                                         <div>
@@ -339,7 +353,7 @@ if (session()->has('error_message')) {
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="text-sm font-bold text-gray">
+                                        <div class="font-bold text-gray-500">
                                             Best Season
                                         </div>
                                         <div>
@@ -355,7 +369,7 @@ if (session()->has('error_message')) {
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="text-sm font-bold text-gray">
+                                        <div class="font-bold text-gray-500">
                                             Accomodation
                                         </div>
                                         <div>
@@ -371,7 +385,7 @@ if (session()->has('error_message')) {
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="text-sm font-bold text-gray">
+                                        <div class="font-bold text-gray-500">
                                             Meals
                                         </div>
                                         <div>
@@ -382,32 +396,18 @@ if (session()->has('error_message')) {
 
                                 <div class="flex aic">
                                     <div class="mr-4">
-                                        <svg class="w-10 h-10 text-primary">
-                                            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#startsat" />
+                                        <svg class="w-10 h-10 text-primary" fill="none" viewBox="0 0 42 26">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.25 8.25c0 1.646-1.354 3-3 3s-3-1.354-3-3 1.354-3 3-3 3 1.354 3 3ZM35.899 8.25c0 1.646-1.354 3-3 3s-3-1.354-3-3 1.354-3 3-3 3 1.354 3 3Z"/>
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 8.25c0 7.142-7.5 11.25-7.5 11.25S.75 15.392.75 8.25c0-4.114 3.386-7.5 7.5-7.5s7.5 3.386 7.5 7.5ZM40.399 8.25c0 7.142-7.5 11.25-7.5 11.25s-7.5-4.108-7.5-11.25c0-4.114 3.386-7.5 7.5-7.5s7.5 3.386 7.5 7.5Z"/>
+                                            <path fill="none" stroke="currentColor" stroke-width="1.5" d="M12,20L30,20"/>
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="text-sm font-bold text-gray">
-                                            Starts at
+                                        <div class="font-bold text-gray-500">
+                                            Starts at/ Ends at
                                         </div>
                                         <div>
-                                            {{ $trip->starting_point }}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="flex table-item aic">
-                                    <div class="mr-4">
-                                        <svg class="w-10 h-10 text-primary">
-                                            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#endsat" />
-                                        </svg>
-                                    </div>
-                                    <div>
-                                        <div class="text-sm font-bold text-gray">
-                                            Ends at
-                                        </div>
-                                        <div>
-                                            {{ $trip->ending_point }}
+                                            {{ $trip->starting_point }} / {{ $trip->ending_point }}
                                         </div>
                                     </div>
                                 </div>
@@ -420,7 +420,7 @@ if (session()->has('error_message')) {
                                     </div>
 
                                     <div>
-                                        <div class="text-sm font-bold text-gray">
+                                        <div class="font-bold text-gray-500">
                                             Trip Route
                                         </div>
                                         <div>
@@ -445,12 +445,14 @@ if (session()->has('error_message')) {
                                             class="px-4 py-2 text-xs rounded-full bg-light" x-on:click="expanded=!expanded" x-text="expanded?'Show less':'Show more'">Show more</button></div>
                                 </div>
 
-                                <div class="p-4 mb-3 bg-light">
-                                    <h3 class="mb-2 text-xl font-display text-primary"> Important Note</h3>
-                                    <p class="mb-0 text-sm">
-                                        {!! $trip->trip_info ? $trip->trip_info->important_note : '' !!}
-                                    </p>
-                                </div>
+                                @if ($trip->trip_info && trim($trip->trip_info->important_note))
+                                    <div class="p-4 mb-3 bg-light">
+                                        <h3 class="mb-2 text-xl font-display text-primary"> Important Note</h3>
+                                        <p class="mb-0 text-sm">
+                                            {!! $trip->trip_info ? $trip->trip_info->important_note : '' !!}
+                                        </p>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -499,23 +501,20 @@ if (session()->has('error_message')) {
                                         </div>
                                     </button>
                                     <div id="day{{ $i + 1 }}" class="border-top-light" x-cloak x-show.transition="day{{ $i + 1 }}Open">
-                                        <div class="{{ isset($itinerary->image_name) && !empty($itinerary->image_name) ? 'grid gap-4 xl:grid-cols-2' : '' }}">
+                                        <div class="py-4">
                                             @if (isset($itinerary->image_name) && !empty($itinerary->image_name))
-                                                <div class="p-4 {{ $i % 2 == 0 ? 'xl:order-1' : '' }}">
-                                                    <a href="{{ $itinerary->imageUrl }}" data-fancybox="itinerary-days" data-caption="Day {{ $itinerary->day }}">
-                                                        <img src="{{ $itinerary->imageUrl }}" alt="" class="object-cover w-full h-full" loading="lazy">
-                                                    </a>
-                                                </div>
+                                                <a href="{{ $itinerary->imageUrl }}" data-fancybox="day{{ $i}}" class="mt-2 mb-2 xl:w-1/2 {{ $i % 2 == 0 ? 'xl:float-left mr-4' : 'xl:float-right ml-4' }}">
+                                                    <img src="{{ $itinerary->imageUrl }}" alt="" 
+                                                    loading="lazy">
+                                                </a>
                                             @endif
-                                            <div class="p-4">
-                                                <p>
-                                                    {!! $itinerary->description !!}
-                                                </p>
+                                            <div class="prose">
+                                                {!! $itinerary->description !!}
                                             </div>
                                         </div>
                                         {{-- icons --}}
                                         @if ($itinerary->max_altitude || $itinerary->accomodation || $itinerary->meals)
-                                            <div class="flex flex-col justify-between gap-4 bg-gray md:flex-row">
+                                            <div class="flex flex-col justify-between clear-both gap-4 bg-gray md:flex-row">
                                                 @if ($itinerary->max_altitude)
                                                     <div class="flex gap-2 p-4">
                                                         <img src="{{ asset('assets/front/img/elevation.png') }}" alt="" class="w-10 h-10" loading="lazy">
@@ -559,7 +558,10 @@ if (session()->has('error_message')) {
 
                     @if ($canMakeChart)
                         <div class="px-4 py-10 mb-4 bg-white tds lg:px-10">
-                            <canvas id="ctx"></canvas>
+                            <figure>
+                                <canvas id="ctx"></canvas>
+                                <figcaption class="mt-6 text-center">Elevation Chart</figcaption>
+                            </figure>
                         </div>
                     @endif
 
@@ -578,15 +580,32 @@ if (session()->has('error_message')) {
                                     data: {
                                         labels: [{{ implode(',', range(1, count($elevations))) }}],
                                         datasets: [{
-                                            label: 'Max. elevation',
+                                            label: 'Max. elevation (metres)',
                                             data: [{{ implode(',', $elevations) }}],
-                                            borderWidth: 2
+                                            borderWidth: 2,
+                                            borderColor: '#4caf50',
+                                            pointBackgroundColor: '#4caf50',
                                         }]
                                     },
                                     options: {
+                                        plugins:{
+                                            legend: {
+                                                display: false
+                                            },
+                                        },
                                         scales: {
+                                            x: {
+                                                title: {
+                                                    display: true,
+                                                    text: 'Days'
+                                                }
+                                            },
                                             y: {
-                                                beginAtZero: true
+                                                beginAtZero: true,
+                                                title: {
+                                                    display: true,
+                                                    text: 'Max. Elevation (metres)'
+                                                }
                                             }
                                         }
                                     }
@@ -595,17 +614,20 @@ if (session()->has('error_message')) {
                         @endif
                     @endpush
 
+                    {{-- Gallery --}}
                     @if (iterator_count($trip->trip_sliders))
-                        <div id="galleries" class="mb-4">
-                            <div class="grid grid-cols-3 gap-4">
+                        <div id="gallery" class="px-4 py-10 mb-4 bg-white tds lg:px-10">
+                            <h2 class="text-3xl font-display text-primary">Gallery</h2>
+                            <div class="grid grid-cols-4 gap-4">
                                 @foreach ($trip->trip_sliders as $trip_slider)
-                                    <a href="{{ $trip_slider->imageUrl }}" data-fancybox="gallery">
-                                        <img src="{{ $trip_slider->imageUrl }}" loading="lazy">
+                                    <a href="{{ $trip_slider->imageUrl }}" data-fancybox="tripGallery">
+                                        <img src="{{ $trip_slider->imageUrl }}" loading="lazy" class="object-cover aspect-square">
                                     </a>
                                 @endforeach
                             </div>
                         </div>
                     @endif
+                    {{--Gallery--}}
 
                     <div id="inclusions" class="px-4 py-10 mb-4 bg-white tds lg:px-10">
                         <div class="p-3 bg-white">
@@ -702,7 +724,20 @@ if (session()->has('error_message')) {
                                             </div>
                                         </div>
                                         <div class="flex items-center gap-6">
-                                            <img src="{{ $review->thumbImageUrl }}" alt="" loading="lazy">
+                                            @if ($review->thumbImageUrl)
+                                                <img src="{{ $review->thumbImageUrl }}" alt="{{ $review->review_name }}" loading="lazy">
+                                            @else
+                                                <div class="flex items-center justify-center w-16 h-16 rounded-full bg-light text-primary">
+                                                    @php
+                                                        $words = explode(" ", $review->review_name);
+                                                        $initials = null;
+                                                        foreach ($words as $w) {
+                                                            $initials .= $w[0];
+                                                        }
+                                                    @endphp
+                                                    {{ $initials }}
+                                                </div>
+                                            @endif
                                             <div>
                                                 <div class="font-bold">{{ $review->review_name }}</div>
                                                 <div class="text-sm text-gray">{{ $review->review_country }}</div>
@@ -762,7 +797,6 @@ if (session()->has('error_message')) {
                         </div>
                     @endif
 
-
                     <div class="flex flex-wrap justify-between mb-4">
                         <div class="flex mb-2">
                             <a href="" class="mr-2 btn btn-accent">Book Now</a>
@@ -781,12 +815,14 @@ if (session()->has('error_message')) {
                                 </svg>
                                 <span>Print Tour Details</span>
                             </a>
-                            <a href="#" class="flex items-center p-1 text-accent" title="">
-                                <svg class="flex-shrink-0 w-6 h-6 mr-2">
-                                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#download" />
-                                </svg>
-                                <span>Download Tour Brochure</span>
-                            </a>
+                            @if ($trip->pdf_file_name)
+                                <a href="#" class="flex items-center p-1 text-accent" title="">
+                                    <svg class="flex-shrink-0 w-6 h-6 mr-2">
+                                        <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#download" />
+                                    </svg>
+                                    <span>Download Tour Brochure</span>
+                                </a>
+                            @endif
                         </div>
                     </div>
 
@@ -852,7 +888,6 @@ if (session()->has('error_message')) {
                     <div class="mb-10">
                         @include('front.elements.experts-card')
                     </div>
-
 
                     @include('front.elements.essential_trip_information')
 

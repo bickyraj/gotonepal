@@ -84,7 +84,7 @@
                 <h2 class="mb-6 text-2xl text-gray-600 font-display">Latest articles</h2>
                 <div class="grid gap-4">
                     @foreach ($blogs as $blog)
-                        <a href="{{ route('front.blogs.show', $blog) }}" class="hover:text-primary">
+                        <a href="{{ route('front.blogs.show', $blog->slug) }}" class="hover:text-primary">
                             <h3>{{ $blog->name }}</h3>
                             <div class="text-sm text-light-gray">{{ $blog->formatted_date }}</div>
                         </a>

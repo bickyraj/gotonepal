@@ -159,7 +159,7 @@
                     <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
                 </h2>
             </div>
-            <div class="grid gap-10 lg:grid-cols-2">
+            <div class="grid gap-10 mb-4 lg:grid-cols-2">
                 @forelse ($reviews as $review)
                     <div class="bg-white rounded-lg review">
                         <div class="mb-4 review__content">
@@ -169,7 +169,20 @@
                             </div>
                         </div>
                         <div class="flex items-center gap-4">
-                            <img src="{{ $review->thumbImageUrl }}" alt="{{ $review->review_name }}" loading="lazy">
+                            @if ($review->thumbImageUrl)
+                                <img src="{{ $review->thumbImageUrl }}" alt="{{ $review->review_name }}" loading="lazy">
+                            @else
+                                <div class="flex items-center justify-center w-16 h-16 rounded-full bg-light text-primary">
+                                    @php
+                                        $words = explode(" ", $review->review_name);
+                                        $initials = null;
+                                        foreach ($words as $w) {
+                                            $initials .= $w[0];
+                                        }
+                                    @endphp
+                                    {{ $initials }}
+                                </div>
+                            @endif
                             <div>
                                 <div class="font-bold">{{ ucfirst($review->review_name) }}</div>
                                 <div class="text-sm text-gray">{{ $review->review_country }}</div>

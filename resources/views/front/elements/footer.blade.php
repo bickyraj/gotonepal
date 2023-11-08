@@ -1,7 +1,7 @@
 <!-- Newsletter -->
 
 <div class="pt-10 bg-gray">
-    <div class="max-w-4xl px-4 pb-10 mx-auto">
+    <div class="relative z-10 max-w-4xl px-4 pb-10 mx-auto">
         <div class="grid gap-8">
             <div class="text-center">
                 <h2 class="mb-2 text-3xl font-display text-primary">Subscribe to our Newsletter</h2>
@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <img src="{{ asset('assets/front/img/webpage_art.webp') }}" width="1920" height="275" alt="Art representing various natural and cultutal heritages of Nepal" class="w-full h-auto"
+    <img src="{{ asset('assets/front/img/webpage_art.webp') }}" width="1920" height="275" alt="Art representing various natural and cultutal heritages of Nepal" class="w-full h-auto -mt-40"
         loading="lazy">
 </div><!-- Newsletter -->
 

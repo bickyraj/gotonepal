@@ -10,60 +10,26 @@ if (session()->has('error_message')) {
 }
 ?>
 @extends('layouts.front_inner')
-@push('styles')
-    <style>
-        .payment-radio-block {
-            display: flex;
-        }
-
-        .nature-from-radio-button {
-            cursor: pointer;
-            margin-right: 6px;
-            width: 16px !important;
-            padding: 0px !important;
-        }
-
-        .nature-form-check label {
-            cursor: pointer !important;
-        }
-
-        .nature-form-check {
-            margin-right: 40px;
-            margin-bottom: 12px;
-            display: flex;
-            align-content: flex-start;
-            justify-content: flex-start;
-            align-items: center;
-
-        }
-    </style>
-@endpush
 @section('content')
-    <!-- Hero -->
-    <section class="relative hero-alt">
-        <img src="{{ $trip->imageUrl }}" alt="" style="max-height: 400px;">
-        <div class="absolute overlay">
-            <div class="container ">
-                <h1>{{ $trip->name }}</h1>
-                <div class="breadcrumb-wrapper">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb fs-sm wrap">
-                            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Booking Form</li>
+    <section class="py-20" x-data="{ noOfTravellers: 1, rate: {{ isset($trip->offer_price) && !empty($trip->offer_price) ? $trip->offer_price : $trip->cost }}, paymentType: 'half', agree: false }">
+        <div class="container">
+            <div class="grid gap-10 lg:grid-cols-3">
+                <div class="lg:col-span-2">
+                    <h1 class="mb-4 text-4xl font-bold text-gray-600 drop-shadow-xl">
+                        Book {{$trip->name}}
+                    </h1>
+                    <nav aria-label="breadcrumb" class="mb-10">
+                        <ol class="flex gap-2">
+                            <li><a href="{{ route('home') }}">Home</a> / </li>
+                            <li><a href="{{ route('front.trips.listing') }}">Trips</a> / </li>
+                            <li><a href="{{ route('front.trips.show', $trip->slug) }}">{{ $trip->name }}</a> / </li>
+                            <li><a href="" aria-current="page">Book</a></li>
                         </ol>
                     </nav>
-                </div>
-            </div>
-    </section>
-
-    <section class="py-20" x-data="{ noOfTravellers: 1, rate: {{ isset($trip->offer_price) && !empty($trip->offer_price) ? $trip->offer_price : $trip->cost }}, paymentType: 'half' }">
-        <div class="container">
-            <div class="grid gap-10 lg:grid-cols-3 xl:grid-cols-4 xl:gap-3">
-                <div class="lg:col-span-2 xl:col-span-3">
                     <form id="captcha-form" action="{{ route('front.trips.booking.store') }}" method="POST">
                         @csrf
                         <input type="hidden" name="id" value="{{ $trip->id }}">
-                        <h2 class="mb-2 text-2xl font-bold text-primary">Personal details</h2>
+                        <h2 class="mb-2 text-xl font-bold text-primary">Personal details</h2>
                         <div class="grid gap-4 mb-2 lg:grid-cols-3">
                             <div class="form-group">
                                 <label for="">First name *</label>
@@ -90,7 +56,7 @@ if (session()->has('error_message')) {
                                 <input type="tel" name="contact_no" class="form-control" placeholder="Contact no." required>
                             </div>
                         </div>
-                        <div class="grid gap-2 mb-2 lg:grid-cols-3">
+                        <div class="grid gap-4 mb-2 lg:grid-cols-3">
                             <div class="form-group">
                                 <label for="">Gender </label>
                                 <select name="gender" id="" class="form-control">
@@ -100,20 +66,19 @@ if (session()->has('error_message')) {
                                 </select>
                             </div>
                         </div>
-
-                        <div class="grid gap-2 mb-2 lg:grid-cols-1">
-                            <div class="form-group">
-                                <label for="">Payment </label>
-                                <div class="payment-radio-block">
-                                    <div class="form-check nature-form-check">
-                                        <input class="nature-from-radio-button" type="radio" name="payment_type" id="flexRadioDefault1" value="full" x-model="paymentType">
-                                        <label class="form-check-label" for="flexRadioDefault1">
+                        <div class="grid gap-4 mb-2 lg:grid-cols-1">
+                            <div>
+                                <label for="" class="text-sm">Payment </label>
+                                <div class="flex gap-10">
+                                    <div class="flex gap-2">
+                                        <input type="radio" name="payment_type" id="full" value="full" x-model="paymentType" class="rounded-full">
+                                        <label for="full">
                                             Full amount payment
                                         </label>
                                     </div>
-                                    <div class="form-check nature-form-check">
-                                        <input class="nature-from-radio-button" checked type="radio" name="payment_type" id="flexRadioDefault2" valud="half" x-model="paymentType">
-                                        <label class="form-check-label" for="flexRadioDefault2">
+                                    <div class="flex gap-2">
+                                        <input checked type="radio" name="payment_type" id="twentyfive" value="half" x-model="paymentType" class="rounded-full">
+                                        <label for="twentyfive">
                                             25% advance payment
                                         </label>
                                     </div>
@@ -121,7 +86,7 @@ if (session()->has('error_message')) {
                             </div>
                         </div>
 
-                        <h2 class="mt-20 mb-2 text-2xl font-bold text-primary">Trip details</h3>
+                        <h2 class="mt-10 mb-2 text-xl font-bold text-primary">Trip details</h3>
                             <div class="grid gap-2 mb-2 lg:grid-cols-3">
                                 <div class="form-group">
                                     <label for="">No. of travellers </label>
@@ -132,18 +97,25 @@ if (session()->has('error_message')) {
                                     <input type="date" name="preferred_departure_date" name="" id="" class="form-control" min="<?php echo date('Y-m-d'); ?>">
                                 </div>
                             </div>
-                            <div class="grid gap-2 mb-2 lg:grid-cols-3">
+                            <div class="grid gap-2 mb-4 lg:grid-cols-3">
                                 <div class="form-group lg:col-span-2">
                                     <label for="">Message </label>
                                     <textarea name="emergency_contact" id="" cols="60" rows="3" class="form-control" placeholder="Message"></textarea>
                                 </div>
                             </div>
+                            <div>
+                                <label class="flex items-baseline gap-2">
+                                    <input type="checkbox" name="agree" x-model="agree">
+                                    <span>I have read and agree with the <a href="#" class="underline">terms and conditions</a> of the company.</span>
+                                </label>
+                            </div>
                             @include('front.elements.recaptcha')
-                            <button id="make_a_payment_btn" class="btn btn-theme" style="background: #ff4c02; color: #fff;">Submit</button>
+                            <div class="mt-4"><button id="make_a_payment_btn" class="px-3 py-2 text-white rounded enabled:bg-accent disabled:bg-gray-400" x-bind:disabled="!agree">Submit</button></div>
                     </form>
                 </div>
 
                 <aside>
+                    <img src="{{ $trip->imageUrl }}" alt="" class="mb-2">
                     <div class="p-4 rounded-lg bg-light">
                         <h2 class="text-2xl font-bold text-primary">Book {{ $trip->name }}</h2>
                         <div class="mt-4 card-body">

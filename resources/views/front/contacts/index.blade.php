@@ -11,36 +11,29 @@ if (session()->has('error_message')) {
 ?>
 @extends('layouts.front')
 @section('content')
-    <!-- Hero -->
-    <section class="hero hero-alt relative">
-        <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="">
-        <div class="overlay absolute">
-            <div class="container ">
-                <h1 class="font-display upper">Contact Us</h1>
-                <div class="breadcrumb-wrapper">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb fs-sm wrap">
-                            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Contact Us</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-    </section>
 
-    <section class="py-10">
+    {{-- Hero --}}
+    @include('front.elements.hero', [
+        'title' => 'Contact Us',
+        'image' => asset('assets/front/img/hero.jpg'),
+        'breadcrumbs' => [
+            'Home' => route('home'),
+        ],
+    ])
+
+    <section class="py-20">
         <div class="container">
-            <div class="grid lg:grid-cols-3 xl:grid-cols-4 gap-10">
-                <div class="lg:col-span-2 xl:col-span-3">
+            <div class="grid gap-10 lg:grid-cols-2 lg:gap-20">
+                <div>
                     <p>Tell us more about your interest and we will respond your query within 12 hours !
                     </p>
                     <div class="mb-8">
                         <form id="captcha-form" action="{{ route('front.contact.store') }}" method="POST">
                             @csrf
-                            <div class="form-group mb-4">
+                            <div class="mb-4 form-group">
                                 <label for="name" class="text-sm">Name</label>
                                 {{-- <div class="flex">
-                                <div class="flex justify-center items-center bg-primary px-2">
+                                <div class="flex items-center justify-center px-2 bg-primary">
                                     <svg class="w-4 h-4 text-white">
                                         <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#users" />
                                     </svg>
@@ -48,10 +41,10 @@ if (session()->has('error_message')) {
                                 <input type="text" name="name" required class="form-control" id="name" placeholder="Name">
                                 {{-- </div> --}}
                             </div>
-                            <div class="form-group mb-4">
+                            <div class="mb-4 form-group">
                                 <label for="email" class="text-sm">E-mail</label>
                                 {{-- <div class="flex">
-                                <div class="flex justify-center items-center bg-primary px-2">
+                                <div class="flex items-center justify-center px-2 bg-primary">
                                     <svg class="w-4 h-4 text-white">
                                         <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#mail" />
                                     </svg>
@@ -59,10 +52,10 @@ if (session()->has('error_message')) {
                                 <input type="email" name="email" required class="form-control" id="email" placeholder="Email">
                                 {{-- </div> --}}
                             </div>
-                            <div class="form-group mb-4">
+                            <div class="mb-4 form-group">
                                 <label for="country" class="text-sm">Country</label>
                                 {{-- <div class="flex">
-                                <div class="flex justify-center items-center bg-primary px-2">
+                                <div class="flex items-center justify-center px-2 bg-primary">
                                     <svg class="w-4 h-4 text-white">
                                         <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#flag" />
                                     </svg>
@@ -70,22 +63,22 @@ if (session()->has('error_message')) {
                                 <input name="" id="country" required name="country" class="form-control" list="countries" placeholder="Country">
                                 {{-- </div> --}}
                             </div>
-                            <div class="form-group mb-4">
+                            <div class="mb-4 form-group">
                                 <label for="phone" class="text-sm">Phone Number</label>
                                 {{-- <div class="flex">
-                                <div class="flex justify-center items-center bg-primary px-2">
+                                <div class="flex items-center justify-center px-2 bg-primary">
                                     <svg class="w-4 h-4 text-white">
                                         <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#phone" />
                                     </svg>
                                 </div> --}}
-                                <input type="tel" name="phone" required class="form-control block" id="phone" placeholder="Phone No.">
+                                <input type="tel" name="phone" required class="block form-control" id="phone" placeholder="Phone No.">
                                 {{-- </div> --}}
                             </div>
-                            <div class="form-group mb-4">
+                            <div class="mb-4 form-group">
                                 <label for="" class="text-sm">Message</label>
-                                <textarea class="form-control block" required name="message" id="message" rows="5" placeholder="Message"></textarea>
+                                <textarea class="block form-control" required name="message" id="message" rows="5" placeholder="Message"></textarea>
                             </div>
-                            <div class="form-group mb-4">
+                            <div class="mb-4 form-group">
                                 <input type="hidden" id="recaptcha" name="g-recaptcha-response">
                                 @include('front.elements.recaptcha')
                                 <button type="submit" class="btn btn-primary">Send</button>
@@ -336,31 +329,72 @@ if (session()->has('error_message')) {
                     </datalist>
                 </div>
                 <aside>
-                    <div class="experts-card bg-primary px-2 py-10 text-white">
-                        <b></b>
-                        <div class="experts-phone flex mb-2">
-                            <a href="tel:+977 9851046017" class="flex aic">
-                                <svg class="w-6 h-6 mr-2">
-                                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#locationmarker" />
-                                </svg>
-                                </svg>
-                                {{ Setting::get('address') ?? '' }}
+                    <div class="p-10 experts-card bg-light">
+                        <div class="flex mb-6 experts-phone">
+                            <a href="tel:+977 9851046017" class="flex gap-6">
+                                <div class="flex items-center justify-center w-10 h-10 rounded bg-primary">
+                                    <svg class="w-6 h-6 text-white rounded">
+                                        <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#locationmarker" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h2 class="font-bold">We're located at</h2>
+                                    {{ Setting::get('address') ?? '' }}
+                                </div>
                             </a>
                         </div>
-                        <div class="experts-phone flex mb-2">
-                            <a href="tel:{{ Setting::get('moblie1') ?? '' }}" class="flex aic">
-                                <svg class="w-6 h-6 mr-2">
-                                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#phone" />
-                                </svg>
-                                {{ Setting::get('mobile1') ?? '' }}
+                        <div class="flex mb-6 experts-phone">
+                            <a href="tel:{{ Setting::get('moblie1') ?? '' }}" class="flex gap-6">
+                                <div class="flex items-center justify-center w-10 h-10 rounded bg-primary">
+                                    <svg class="w-6 h-6 text-white rounded">
+                                        <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#phone" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h2 class="font-bold">Call us</h2>
+                                    {{ Setting::get('mobile1') ?? '' }}
+                                </div>
                             </a>
                         </div>
-                        <div class="experts-phone flex mb-3">
-                            <a href="mailto:{{ Setting::get('email') ?? '' }}" class="flex aic">
-                                <svg class="w-6 h-6 mr-2">
-                                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#mail" />
+                        <div class="flex mb-6 experts-phone">
+                            <a href="mailto:{{ Setting::get('email') ?? '' }}" class="flex gap-6">
+                                <div class="flex items-center justify-center w-10 h-10 rounded bg-primary">
+                                    <svg class="w-6 h-6 text-white rounded">
+                                        <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#mail" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h2 class="font-bold">Write to us</h2>
+                                    {!! str_replace(['@', '.'], ['<wbr>@', '<wbr>.'], Setting::get('email') ?? '') !!}
+                                </div>
+                            </a>
+                        </div>
+                        <div class="mb-6 border-b border-gray-600"></div>
+                        <div class="flex justify-center gap-4 bg-light">
+                            <a href="{{ Setting::get('facebook') ?? '' }}" class="mr-1 text-primary hover:text-accent">
+                                <svg class="w-8 h-8">
+                                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#facebookmessenger" />
                                 </svg>
-                                {!! str_replace(['@', '.'], ['<wbr>@', '<wbr>.'], Setting::get('email') ?? '') !!}
+                            </a>
+                            <a href="{{ Setting::get('viber') ?? '' }}" class="mr-1 text-primary hover:text-accent">
+                                <svg class="w-8 h-8">
+                                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#viber" />
+                                </svg>
+                            </a>
+                            <a href="{{ Setting::get('whatsapp') ?? '' }}" class="mr-1 text-primary hover:text-accent">
+                                <svg class="w-8 h-8">
+                                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#whatsapp" />
+                                </svg>
+                            </a>
+                            <a href="{{ Setting::get('skype') ?? '' }}" class="mr-1 text-primary hover:text-accent">
+                                <svg class="w-8 h-8">
+                                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#skype" />
+                                </svg>
+                            </a>
+                            <a href="{{ Setting::get('weixin') ?? '' }}" class="mr-1 text-primary hover:text-accent">
+                                <svg class="w-8 h-8">
+                                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#weixin" />
+                                </svg>
                             </a>
                         </div>
                     </div>
@@ -369,7 +403,8 @@ if (session()->has('error_message')) {
         </div>
     </section>
 
-  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7064.205282804139!2d85.312504!3d27.714117!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb18fd7455352f%3A0xfb9d7c23039f5f!2sNepal%20Environmental%20Treks%20and%20Expedition%20Pvt.%20Ltd.!5e0!3m2!1sen!2sus!4v1697099677601!5m2!1sen!2sus" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7064.205282804139!2d85.312504!3d27.714117!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb18fd7455352f%3A0xfb9d7c23039f5f!2sNepal%20Environmental%20Treks%20and%20Expedition%20Pvt.%20Ltd.!5e0!3m2!1sen!2sus!4v1699433789541!5m2!1sen!2sus" width="100%" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    
 @endsection
 @push('scripts')
     <script type="text/javascript">

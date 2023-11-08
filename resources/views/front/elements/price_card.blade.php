@@ -18,7 +18,7 @@
             </div>
         @endif
         <div class="mb-2 text-center">
-            <a href="{{ route('front.trips.booking', $trip->slug) }}" class="w-full mb-2 btn btn-accent">Book Now</a>
+            <a href="{{ route('front.trips.booking', $trip->slug) }}" class="w-full mb-2 font-bold btn btn-accent">Book Now</a>
             <a href="{{ route('front.plantrip.createfortrip', $trip->slug) }}" class="btn btn-accent">
 
                 <svg class="flex-shrink-0 w-6 h-6 mr-2">
@@ -34,12 +34,14 @@
                 </svg>
                 <span class="text-sm">Print Tour Details</span>
             </a>
-            <a href="#" class="flex items-center p-1 text-light" title="">
-                <svg class="flex-shrink-0 w-4 h-4 mr-2">
-                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#download" />
-                </svg>
-                <span class="text-sm">Download Tour Brochure</span>
-            </a>
+            @if ($trip->pdf_file_name)
+                <a href="#" class="flex items-center p-1 text-light" title="">
+                    <svg class="flex-shrink-0 w-4 h-4 mr-2">
+                        <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#download" />
+                    </svg>
+                    <span class="text-sm">Download Tour Brochure</span>
+                </a>
+            @endif
             <a href="https://www.facebook.com/sharer/sharer.php?u={{ route('front.trips.show', ['slug' => $trip->slug]) }}" class="flex items-center p-1 text-light" title="Share tour">
                 <svg class="flex-shrink-0 w-4 h-4 mr-2">
                     <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#share" />

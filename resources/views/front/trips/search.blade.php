@@ -1,26 +1,26 @@
 @extends('layouts.front_inner')
 @section('content')
-<!-- Hero -->
-<section class="hero hero-alt relative">
-    <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="">
-    <div class="overlay absolute">
-        <div class="container ">
-            <h1>Tour Packages</h1>
-            <div class="breadcrumb-wrapper">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb fs-sm wrap">
-                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Tour Packages</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-</section>
 
-<section class="pt-10">
+  {{-- Hero --}}
+  @php
+      if(isset($keyword) && !empty($keyword)){
+        $title = 'Search results for "' . $keyword . '"';
+      } else {
+        $title = 'Trip List';
+      }
+  @endphp
+  @include('front.elements.hero', [
+    'title' => $title,
+    'image' => asset('assets/front/img/hero.jpg'),
+    'breadcrumbs' => [
+        'Home' => route('home'),
+    ],
+])
+
+<section class="py-10">
     <div class="container">
         <div class="mb-4" id="searchDiv">
-            <div class="grid lg:grid-cols-3 gap-2">
+            <div class="grid gap-2 lg:grid-cols-3">
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="">Destinations</label>
@@ -63,14 +63,9 @@
 
         <!-- Search Results -->
     </div>
-    <div class="bg-light">
-        <div class="container py-4">
-            @if(isset($keyword) && !empty($keyword))
-            <p id="search-p" class="fs-sm">Search results for "<strong>{{ strtoupper($keyword) }}</strong>"</p>
-            @endif
-
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-2 xl:gap-3">
+    <div class="bg-gray-100">
+        <div class="container py-20">
+            <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
                 <?php foreach ($trips as $tour) : ?>
                     @include('front.elements.tour-card')
                 <?php endforeach; ?>
@@ -105,7 +100,7 @@
       //data: data,
       async: "false",
       beforeSend: function(xhr) {
-        var spinner = '<button style="margin:0 auto;" class="btn btn-sm btn-primary text-white" type="button" disabled>\
+        var spinner = '<button style="margin:0 auto;" class="text-white btn btn-sm btn-primary" type="button" disabled>\
                       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>\
                       Loading Trips...\
                     </button>';

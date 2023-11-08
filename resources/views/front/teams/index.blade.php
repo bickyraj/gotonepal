@@ -39,7 +39,7 @@ if (session()->has('error_message')) {
                     <button :class="{ 'btn': true, 'btn-accent': active === 'administration', 'btn-primary': active !== 'administration' }" x-on:click="active='administration'">Administration</button>
                     <button :class="{ 'btn': true, 'btn-accent': active === 'representatives', 'btn-primary': active !== 'representatives' }" x-on:click="active='representatives'">Representatives</button>
                     <button :class="{ 'btn': true, 'btn-accent': active === 'tourguides', 'btn-primary': active !== 'tourguides' }" x-on:click="active='tourguides'">Guides</button>
-                    <button :class="{ 'btn': true, 'btn-accent': active === 'other', 'btn-primary': active !== 'other' }" x-on:click="active='other'">Other Staffs</button>
+                    <button :class="{ 'btn': true, 'btn-accent': active === 'others', 'btn-primary': active !== 'others' }" x-on:click="active='others'">Other Staffs</button>
 
                     <div x-show="active==='administration'">
                         <div class="grid gap-2 pt-8 lg:gap-3">
@@ -70,11 +70,11 @@ if (session()->has('error_message')) {
                     </div>
                     <div x-show="active==='others'">
                         <div class="grid gap-2 pt-8 lg:gap-3">
-                            {{-- @if ($others)
+                            @if ($others)
                                 @foreach ($others as $item)
                                     @include('front.elements.team_card')
                                 @endforeach
-                            @endif --}}
+                            @endif
                         </div>
                     </div>
                 </div>

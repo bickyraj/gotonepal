@@ -1754,9 +1754,11 @@ p.select-ratings i:hover {
   border: 0;
   float: none;
 }
-.mega-menu a {
-  padding: 0.5rem 1rem;
-  border-left: 0 !important;
+@media screen {
+  .sm-simple .mega-menu a {
+    padding: 0.5rem 1rem;
+    border-left: 0 !important;
+  }
 }
 .mega-menu .mega-menu-column>li:not(:last-child) {
   margin-bottom: 1rem;

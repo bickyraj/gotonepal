@@ -3,7 +3,7 @@
 @endpush
 
 {{-- Header --}}
-<header class="relative w-full transition bg-white header " x-data="{ mobilenavOpen: false, searchboxOpen: false }">
+<header class="relative w-full transition bg-white border-b border-gray-200 header" x-data="{ mobilenavOpen: false, searchboxOpen: false }">
     <div class="text-sm bg-light">
         <div class="container flex flex-wrap justify-between h-10 gap-10 text-sm text-gray-600">
 

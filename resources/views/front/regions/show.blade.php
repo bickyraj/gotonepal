@@ -36,16 +36,14 @@
 @section('meta_og_image'){!! $seo->socialImageUrl ?? '' !!}@stop
 @section('content')
 
-    <!-- Hero -->
-    <section class="relative hero hero-alt">
-        <img src="{{ $region->imageUrl }}" alt="">
-        <div class="absolute w-full top-1/2">
-            <div class="container text-center">
-                <div class="text-2xl text-center text-white">Regions</div>
-                <h1 style="max-width: unset;">{{ $region->name }}</h1>
-            </div>
-        </div>
-    </section>
+    {{-- Hero --}}
+    @include('front.elements.hero', [
+        'title' => $region->name,
+        'image' => $region->imageUrl,
+        'breadcrumbs' => [
+            'Home' => route('home'),
+        ],
+    ])
 
     <section class="pt-5">
         <div class="container" style="padding-top: 20px;max-width: 1100px;">

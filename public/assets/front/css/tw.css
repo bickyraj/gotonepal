@@ -691,7 +691,7 @@ select {
 }
 .prose {
   color: var(--tw-prose-body);
-  max-width: 75ch;
+  max-width: 80ch;
 }
 .prose :where(p):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
   margin-top: 1.25em;
@@ -1196,6 +1196,9 @@ select {
 .row-span-2 {
   grid-row: span 2 / span 2;
 }
+.clear-both {
+  clear: both;
+}
 .m-8 {
   margin: 2rem;
 }
@@ -1210,6 +1213,9 @@ select {
 .my-6 {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+}
+.-mt-40 {
+  margin-top: -10rem;
 }
 .mb-0 {
   margin-bottom: 0px;
@@ -1244,6 +1250,9 @@ select {
 .ml-2 {
   margin-left: 0.5rem;
 }
+.ml-4 {
+  margin-left: 1rem;
+}
 .mr-1 {
   margin-right: 0.25rem;
 }
@@ -1256,11 +1265,11 @@ select {
 .mt-1 {
   margin-top: 0.25rem;
 }
+.mt-10 {
+  margin-top: 2.5rem;
+}
 .mt-2 {
   margin-top: 0.5rem;
-}
-.mt-20 {
-  margin-top: 5rem;
 }
 .mt-3 {
   margin-top: 0.75rem;
@@ -1301,6 +1310,9 @@ select {
 .aspect-\[3\/4\] {
   aspect-ratio: 3/4;
 }
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
 .h-1 {
   height: 0.25rem;
 }
@@ -1337,14 +1349,23 @@ select {
 .h-96 {
   height: 24rem;
 }
+.h-\[36rem\] {
+  height: 36rem;
+}
 .h-auto {
   height: auto;
 }
 .h-full {
   height: 100%;
 }
-.h-\[36rem\] {
-  height: 36rem;
+.h-\[32rem\] {
+  height: 32rem;
+}
+.h-\[28rem\] {
+  height: 28rem;
+}
+.h-\[24rem\] {
+  height: 24rem;
 }
 .max-h-96 {
   max-height: 24rem;
@@ -1445,6 +1466,9 @@ select {
 .grid-cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
 .flex-col {
   flex-direction: column;
 }
@@ -1459,6 +1483,9 @@ select {
 }
 .items-center {
   align-items: center;
+}
+.items-baseline {
+  align-items: baseline;
 }
 .justify-end {
   justify-content: flex-end;
@@ -1640,6 +1667,11 @@ select {
 .from-primary-dark\/60 {
   --tw-gradient-from: rgb(62 142 65 / 0.6) var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(62 142 65 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+.from-black\/60 {
+  --tw-gradient-from: rgb(0 0 0 / 0.6) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(0 0 0 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 .to-primary-dark\/0 {
@@ -1934,6 +1966,10 @@ select {
 .outline {
   outline-style: solid;
 }
+.drop-shadow-xl {
+  --tw-drop-shadow: drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
 .grayscale {
   --tw-grayscale: grayscale(100%);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
@@ -2111,6 +2147,14 @@ select {
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
+.enabled\:bg-accent:enabled {
+  --tw-bg-opacity: 1;
+  background-color: rgb(246 156 39 / var(--tw-bg-opacity));
+}
+.disabled\:bg-gray-400:disabled {
+  --tw-bg-opacity: 1;
+  background-color: rgb(156 163 175 / var(--tw-bg-opacity));
+}
 .group:hover .group-hover\:text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -2162,10 +2206,6 @@ select {
 
   .md\:flex {
     display: flex;
-  }
-
-  .md\:h-\[30rem\] {
-    height: 30rem;
   }
 
   .md\:h-\[36rem\] {
@@ -2260,16 +2300,16 @@ select {
     height: 8rem;
   }
 
+  .lg\:h-\[48rem\] {
+    height: 48rem;
+  }
+
   .lg\:h-\[80vh\] {
     height: 80vh;
   }
 
-  .lg\:h-\[36rem\] {
-    height: 36rem;
-  }
-
-  .lg\:h-\[48rem\] {
-    height: 48rem;
+  .lg\:h-\[40rem\] {
+    height: 40rem;
   }
 
   .lg\:grid-cols-1 {
@@ -2328,6 +2368,11 @@ select {
   .lg\:px-4 {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .lg\:px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 
   .lg\:py-10 {
@@ -2391,10 +2436,6 @@ select {
 }
 @media (min-width: 1280px) {
 
-  .xl\:order-1 {
-    order: 1;
-  }
-
   .xl\:col-span-2 {
     grid-column: span 2 / span 2;
   }
@@ -2403,12 +2444,20 @@ select {
     grid-column: span 3 / span 3;
   }
 
-  .xl\:grid-cols-1 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+  .xl\:float-right {
+    float: right;
   }
 
-  .xl\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .xl\:float-left {
+    float: left;
+  }
+
+  .xl\:w-1\/2 {
+    width: 50%;
+  }
+
+  .xl\:grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 
   .xl\:grid-cols-3 {
