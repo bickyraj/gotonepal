@@ -20,6 +20,7 @@ class TripController extends Controller
     {
         $trip = Trip::where('slug', '=', $slug)->with([
             'trip_galleries',
+            'trip_sliders',
             'trip_info',
             'trip_include_exclude',
             'trip_itineraries' => function ($q) {
@@ -38,9 +39,17 @@ class TripController extends Controller
             }
         ])->first();
 
+        $canMakeChart = true;
+        $elevations = $trip->trip_itineraries->map(function ($day) use (&$canMakeChart) {
+            if (!is_numeric($day->max_altitude)) {
+                $canMakeChart = false;
+            }
+            return $day->max_altitude;
+        })->toArray();
+
         $why_choose_us = \App\WhyChoose::select('id', 'title')->latest()->get();
         $blogs = \App\Blog::select('id', 'name', 'slug')->latest()->limit(5)->get();
-        return view('front.trips.show', compact('trip', 'blogs', 'why_choose_us'));
+        return view('front.trips.show', compact('trip', 'blogs', 'why_choose_us', 'canMakeChart', 'elevations'));
     }
 
     public function booking($slug)
@@ -165,7 +174,6 @@ class TripController extends Controller
                         }
                     });
             });
-
         }
 
         if (isset($region_id) && !empty($region_id)) {

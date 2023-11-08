@@ -12,7 +12,7 @@
             <div class="relative hidden lg:block w-28">
                 <div class="absolute right-0 md:right-[unset] flex items-center px-4 py-1 font-bold text-red-100 bg-red-600 h-14 font-display">
                     <div class="text-center">
-                        <div class="text-lg whitespace-nowrap">26 years</div>
+                        <div class="text-lg whitespace-nowrap">33 years</div>
                         <div class="whitespace-nowrap">of excellence</div>
                     </div>
                     <div class="absolute bottom-0 left-full">

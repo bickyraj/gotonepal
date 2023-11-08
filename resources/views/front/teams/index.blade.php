@@ -15,9 +15,9 @@ if (session()->has('error_message')) {
 @endpush
 @section('content')
     <!-- Hero -->
-    <section class="hero hero-alt relative">
+    <section class="relative hero hero-alt">
         <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="" style="border-radius: 0px;height: 500px;">
-        <div class="overlay absolute">
+        <div class="absolute overlay">
             <div class="container ">
                 <h1 class="font-display upper">Our Team</h1>
                 <div class="breadcrumb-wrapper">
@@ -29,18 +29,20 @@ if (session()->has('error_message')) {
                     </nav>
                 </div>
             </div>
+        </div>
     </section>
 
     <section class="py-10">
         <div class="container" x-data="{ active: 'administration' }">
-            <div class="grid lg:grid-cols-3 xl:grid-cols-4 gap-10">
-                <div class="lg:col-span-2 xl:col-span-3">
-                    <button :class="{ 'btn': true, 'btn-accent': active === 'administration', 'btn-primary': active !== 'administration' }" @click="active='administration'">Administration</button>
-                    <button :class="{ 'btn': true, 'btn-accent': active === 'representatives', 'btn-primary': active !== 'representatives' }" @click="active='representatives'">Representatives</button>
-                    <button :class="{ 'btn': true, 'btn-accent': active === 'tourguides', 'btn-primary': active !== 'tourguides' }" @click="active='tourguides'">Tour Guides</button>
+            <div class="grid gap-10 lg:grid-cols-3">
+                <div class="lg:col-span-2">
+                    <button :class="{ 'btn': true, 'btn-accent': active === 'administration', 'btn-primary': active !== 'administration' }" x-on:click="active='administration'">Administration</button>
+                    <button :class="{ 'btn': true, 'btn-accent': active === 'representatives', 'btn-primary': active !== 'representatives' }" x-on:click="active='representatives'">Representatives</button>
+                    <button :class="{ 'btn': true, 'btn-accent': active === 'tourguides', 'btn-primary': active !== 'tourguides' }" x-on:click="active='tourguides'">Guides</button>
+                    <button :class="{ 'btn': true, 'btn-accent': active === 'other', 'btn-primary': active !== 'other' }" x-on:click="active='other'">Other Staffs</button>
 
                     <div x-show="active==='administration'">
-                        <div class="grid gap-2 lg:gap-3 pt-8">
+                        <div class="grid gap-2 pt-8 lg:gap-3">
                             @if ($administrations)
                                 @foreach ($administrations as $item)
                                     @include('front.elements.team_card')
@@ -49,7 +51,7 @@ if (session()->has('error_message')) {
                         </div>
                     </div>
                     <div x-show="active==='representatives'">
-                        <div class="grid gap-2 lg:gap-3 pt-8">
+                        <div class="grid gap-2 pt-8 lg:gap-3">
                             @if ($representatives)
                                 @foreach ($representatives as $item)
                                     @include('front.elements.team_card')
@@ -58,7 +60,7 @@ if (session()->has('error_message')) {
                         </div>
                     </div>
                     <div x-show="active==='tourguides'">
-                        <div class="grid gap-2 lg:gap-3 pt-8">
+                        <div class="grid gap-2 pt-8 lg:gap-3">
                             @if ($tour_guides)
                                 @foreach ($tour_guides as $item)
                                     @include('front.elements.team_card')
@@ -66,7 +68,15 @@ if (session()->has('error_message')) {
                             @endif
                         </div>
                     </div>
-
+                    <div x-show="active==='others'">
+                        <div class="grid gap-2 pt-8 lg:gap-3">
+                            {{-- @if ($others)
+                                @foreach ($others as $item)
+                                    @include('front.elements.team_card')
+                                @endforeach
+                            @endif --}}
+                        </div>
+                    </div>
                 </div>
                 <aside>
                     @include('front.elements.enquiry')

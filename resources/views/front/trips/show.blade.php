@@ -78,7 +78,7 @@ if (session()->has('error_message')) {
             @if (iterator_count($trip->trip_galleries))
                 @foreach ($trip->trip_galleries as $gallery)
                     <div class="slide">
-                        <img src="{{ $gallery->imageUrl }}" class="block" alt="">
+                        <img src="{{ $gallery->imageUrl }}" class="block w-full object-cover h-96 md:h-[36rem] lg:h-[48rem]" alt="">
                     </div>
                 @endforeach
             @endif
@@ -126,14 +126,14 @@ if (session()->has('error_message')) {
         </div>
 
         <div class="absolute hidden hero-slider-controls md:block">
-            <div class="container flex">
+            <div class="container flex gap-2">
                 <button>
-                    <svg class="w-6 h-6">
+                    <svg class="w-5 h-5">
                         <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowleft') }}" />
                     </svg>
                 </button>
                 <button>
-                    <svg class="w-6 h-6">
+                    <svg class="w-5 h-5">
                         <use xlink:href="{{ asset('assets/front/img/sprite.svg#arrownarrowright') }}" />
                     </svg>
                 </button>
@@ -202,7 +202,8 @@ if (session()->has('error_message')) {
                         @if ($trip->trip_seo->about_leader)
                             <li class="border-r border-light">
                                 <a href="#equipment-list" class="flex flex-col items-center gap-1 px-4 py-2 lg:px-10 hover:bg-accent hover:text-white group">
-                                    <svg class="w-6 h-6 text-gray group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <svg class="w-6 h-6 text-gray group-hover:text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                        aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z">
                                         </path>
@@ -520,7 +521,7 @@ if (session()->has('error_message')) {
                                                         <img src="{{ asset('assets/front/img/elevation.png') }}" alt="" class="w-10 h-10" loading="lazy">
                                                         <div>
                                                             <h4 class="text-sm font-bold">Max. altitude</h4>
-                                                            <div>{{ $itinerary->max_altitude }}</div>
+                                                            <div>{{ $itinerary->max_altitude }}m</div>
                                                         </div>
                                                     </div>
                                                 @endif
@@ -556,12 +557,55 @@ if (session()->has('error_message')) {
                         </div>
                     </div>
 
+                    @if ($canMakeChart)
+                        <div class="px-4 py-10 mb-4 bg-white tds lg:px-10">
+                            <canvas id="ctx"></canvas>
+                        </div>
+                    @endif
+
                     @push('scripts')
                         <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.23/dist/fancybox/fancybox.umd.min.js"></script>
                         <script>
                             Fancybox.bind("[data-fancybox]", {});
                         </script>
+                        @if ($canMakeChart)
+                            <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+                            <script>
+                                const ctx = document.getElementById('ctx');
+
+                                new Chart(ctx, {
+                                    type: 'line',
+                                    data: {
+                                        labels: [{{ implode(',', range(1, count($elevations))) }}],
+                                        datasets: [{
+                                            label: 'Max. elevation',
+                                            data: [{{ implode(',', $elevations) }}],
+                                            borderWidth: 2
+                                        }]
+                                    },
+                                    options: {
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true
+                                            }
+                                        }
+                                    }
+                                });
+                            </script>
+                        @endif
                     @endpush
+
+                    @if (iterator_count($trip->trip_sliders))
+                        <div id="galleries" class="mb-4">
+                            <div class="grid grid-cols-3 gap-4">
+                                @foreach ($trip->trip_sliders as $trip_slider)
+                                    <a href="{{ $trip_slider->imageUrl }}" data-fancybox="gallery">
+                                        <img src="{{ $trip_slider->imageUrl }}" loading="lazy">
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
 
                     <div id="inclusions" class="px-4 py-10 mb-4 bg-white tds lg:px-10">
                         <div class="p-3 bg-white">
@@ -890,7 +934,7 @@ if (session()->has('error_message')) {
     <script src="https://cdn.jsdelivr.net/npm/wheelzoom@4.0.1/wheelzoom.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tiny-slider@2.9.3/dist/tiny-slider.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.23/dist/fancybox/fancybox.umd.min.js"></script>
-    
+
     <script>
         wheelzoom(document.querySelector('.wheelzoom'))
     </script>
@@ -1015,7 +1059,7 @@ if (session()->has('error_message')) {
             // $("#review-rating").rating();
         });
     </script>
-    
+
     <script>
         $(function() {
             var enquiry_validator = $("#enquiry-form").validate({

@@ -26,6 +26,7 @@ class HomeController extends Controller
         $data['block_1_trips'] = \App\Trip::where('block_1', 1)->latest()->get();
         $data['block_2_trips'] = \App\Trip::where('block_2', 1)->get();
         $data['block_3_trips'] = \App\Trip::where('block_3', 1)->latest()->get();
+        $data['block_4_trips'] = \App\Trip::where('block_4', 1)->latest()->get();
         $data['reviews'] = \App\TripReview::latest()->limit(2)->published()->get();
         $data['blogs'] = \App\Blog::latest()->limit(3)->get();
         $data['why_choose_us'] = \App\WhyChoose::latest()->limit(6)->get();

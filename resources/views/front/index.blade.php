@@ -198,7 +198,7 @@
     {{-- Trip of the month --}}
     <div class="py-20 text-white bg-center bg-cover bg-primary-dark" style="background: linear-gradient(rgba(31,71,32, 0.8), rgba(31,71,32,0.8)), url('{{ asset('assets/front/img/mountains.jpg') }}');">
         <div class="container">
-            <div class="flex flex-wrap justify-between gap-10 mb-10">
+            <div class="flex flex-wrap items-center justify-between gap-10 mb-10">
                 <div>
                     <p class="mb-2 text-2xl text-white font-handwriting">This doesn't get any better</p>
                     <div class="flex">
@@ -231,6 +231,53 @@
             </div>
         </div>
     </div>{{-- Trip of the month --}}
+
+    {{-- Trips Block Three --}}
+    <div class="py-20 featured bg-light">
+        <div class="container">
+            <div class="flex justify-center">
+                <div>
+                    {{-- <p class="mb-2 text-2xl text-center text-primary font-handwriting">Peak Climbing</p> --}}
+                    <h2 class="relative px-10 mb-16 text-3xl font-bold text-center text-gray-600 font-display">
+                        Peak Climbing
+                        <div class="absolute left-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
+                        <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
+                    </h2>
+                </div>
+            </div>
+
+            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-8">
+
+                @forelse ($block_3_trips as $block_3_tour)
+                    @include('front.elements.tour-card', ['tour' => $block_3_tour])
+                @empty
+                @endforelse
+            </div>
+        </div>
+    </div> {{-- Trips Block Three --}}
+
+    {{-- Trips Block Three --}}
+    <div class="py-20 featured bg-light">
+        <div class="container">
+            <div class="flex justify-center">
+                <div>
+                    {{-- <p class="mb-2 text-2xl text-center text-primary font-handwriting">Peak Climbing</p> --}}
+                    <h2 class="relative px-10 mb-16 text-3xl font-bold text-center text-gray-600 font-display">
+                        Hot Packages
+                        <div class="absolute left-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
+                        <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
+                    </h2>
+                </div>
+            </div>
+
+            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-8">
+                @forelse ($block_4_trips as $block_4_tour)
+                    @include('front.elements.tour-card', ['tour' => $block_4_tour])
+                @empty
+                @endforelse
+            </div>
+        </div>
+    </div> {{-- Trips Block Three --}}
 
     {{-- Departure Dates --}}
     <div class="px-4 py-20 departure-dates bg-gray">
