@@ -322,6 +322,13 @@
                               {{-- <span class="form-text text-muted">Please enter your full name</span> --}}
                             </div>
                           </div>
+                          <div class="form-group row">
+                            <label class="col-lg-2 col-form-label">Youtube</label>
+                            <div class="col-lg-7">
+                              <input type="text" id="input-youtube" class="form-control form-control-sm" name="youtube" value="{{ Setting::get('youtube') }}">
+                              {{-- <span class="form-text text-muted">Please enter your full name</span> --}}
+                            </div>
+                          </div>
                           <hr>
                           <div class="kt-form__actions">
                             <button type="submit" class="btn btn-sm btn-primary">

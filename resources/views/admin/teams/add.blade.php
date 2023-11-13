@@ -115,6 +115,10 @@
                             <input type="text" name="phone" class="form-control" aria-describedby="" placeholder="Phone Number">
                         </div>
                         <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" name="email" class="form-control" aria-describedby="" placeholder="Email">
+                        </div>
+                        <div class="form-group">
                             <label>Description</label>
                             <div id="summernote-description" class="summernote"></div>
                         </div>

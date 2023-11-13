@@ -151,6 +151,13 @@
                             </svg>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ Setting::get('youtube') }}" class="flex items-center justify-center w-10 h-10 rounded-full bg-primary-dark hover:bg-[#8f5db7]">
+                            <svg>
+                                <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#youtube" />
+                            </svg>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

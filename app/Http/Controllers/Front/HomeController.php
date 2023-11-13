@@ -22,7 +22,7 @@ class HomeController extends Controller
     {
         $data['banners'] = \App\Banner::all();
         $data['destinations'] = \App\Destination::orderBy('id')->select('id', 'name', 'slug', 'image_name')->get();
-        $data['activities'] = \App\Activity::where('block_1', 1)->orderBy('id')->select('id', 'name', 'slug', 'image_name', 'block_1')->limit(5)->get();
+        $data['activities'] = \App\Activity::where('block_1', 1)->orderBy('id')->select('id', 'name', 'slug', 'image_name', 'block_1')->get();
         $data['block_1_trips'] = \App\Trip::where('block_1', 1)->latest()->get();
         $data['block_2_trips'] = \App\Trip::where('block_2', 1)->get();
         $data['block_3_trips'] = \App\Trip::where('block_3', 1)->latest()->get();

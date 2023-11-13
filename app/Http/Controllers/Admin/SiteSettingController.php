@@ -77,6 +77,7 @@ class SiteSettingController extends Controller
         Setting::update('twitter', $request->get('twitter'));
         Setting::update('whatsapp', $request->get('whatsapp'));
         Setting::update('viber', $request->get('viber'));
+        Setting::update('youtube', $request->get('youtube'));
 
         session()->flash('success_message', __('alerts.update_success'));
         return redirect()->route('admin.settings.general');

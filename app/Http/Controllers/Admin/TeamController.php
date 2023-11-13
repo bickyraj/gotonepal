@@ -56,6 +56,7 @@ class TeamController extends Controller
         $team->sort_order = 0;
         $team->type = $request->type;
         $team->phone = $request->phone;
+        $team->email = $request->email;
         $team->slug = $this->create_slug_title($team->name);
         $team->status = 1;
 
@@ -191,6 +192,7 @@ class TeamController extends Controller
         $team->position = $request->position;
         $team->type = $request->type;
         $team->phone = $request->phone;
+        $team->email = $request->email;
         $team->slug = $this->create_slug_title($team->name);
         $team->status = 1;
 

@@ -283,6 +283,7 @@ class TripController extends Controller
                 $q->orderBy('display_order', 'asc');
             },
             'trip_galleries',
+            'trip_sliders',
             'similar_trips',
             'addon_trips'
         ])->find($id);
