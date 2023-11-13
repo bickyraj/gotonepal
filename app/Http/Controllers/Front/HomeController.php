@@ -22,13 +22,14 @@ class HomeController extends Controller
     {
         $data['banners'] = \App\Banner::all();
         $data['destinations'] = \App\Destination::orderBy('id')->select('id', 'name', 'slug', 'image_name')->get();
-        $data['activities'] = \App\Activity::orderBy('id')->select('id', 'name', 'slug', 'image_name')->get();
+        $data['activities'] = \App\Activity::where('block_1', 1)->orderBy('id')->select('id', 'name', 'slug', 'image_name', 'block_1')->limit(5)->get();
         $data['block_1_trips'] = \App\Trip::where('block_1', 1)->latest()->get();
         $data['block_2_trips'] = \App\Trip::where('block_2', 1)->get();
         $data['block_3_trips'] = \App\Trip::where('block_3', 1)->latest()->get();
         $data['block_4_trips'] = \App\Trip::where('block_4', 1)->latest()->get();
+        $data['teams'] = \App\Team::where('block_1', 1)->latest()->get();
         $data['reviews'] = \App\TripReview::latest()->limit(2)->published()->get();
-        $data['blogs'] = \App\Blog::latest()->limit(3)->get();
+        $data['blogs'] = \App\Blog::where('status', 1)->orderBy('blog_date', 'desc')->limit(3)->get();
         $data['why_choose_us'] = \App\WhyChoose::latest()->limit(6)->get();
         $data['departures'] = TripDeparture::where([
             ['status', 1],

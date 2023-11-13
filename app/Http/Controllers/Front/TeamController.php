@@ -13,7 +13,8 @@ class TeamController extends Controller
 		$administrations = Team::where('type', '=', 1)->get();
 		$representatives = Team::where('type', '=', 2)->get();
 		$tour_guides = Team::where('type', '=', 3)->get();
-		return view('front.teams.index', compact('administrations', 'representatives', 'tour_guides'));
+		$others = Team::where('type', '=', 4)->get();
+		return view('front.teams.index', compact('administrations', 'representatives', 'tour_guides', 'others'));
 	}
 
 	public function show($slug)

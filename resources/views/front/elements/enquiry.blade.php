@@ -1,66 +1,60 @@
-<div class="px-2 py-8 mb-8 bg-white quick-enquiry-card lg:px-4">
-    <h2 class="mb-4 text-2xl font-display">Quick Enquiry</h2>
+<div class="px-4 py-8 mb-8 border quick-enquiry-card border-light bg-gray-50">
+    <h2 class="mb-4 text-2xl font-display text-primary">Quick Enquiry</h2>
     <div class="card-body">
         <form id="enquiry-form" action="{{ route('front.contact.store') }}" method="POST">
             @csrf
             <input type="hidden" id="redirect-url" name="redirect_url">
-
-            <div class="mb-2">
+            <div class="mb-2 ">
                 <label class="sr-only" for="">Name</label>
-                <div class="flex items-center gap-2">
-                    <div class="flex items-center justify-center flex-shrink-0 p-2 rounded-full bg-light">
+                <div class="relative">
+                    <div class="absolute top-4 left-4 ">
                         <svg class="w-4 h-4 text-primary">
                             <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#users" />
                         </svg>
                     </div>
-                    <input type="text" name="name" class="w-full px-4 py-1 text-sm border-transparent rounded-lg bg-light" placeholder="Name" required>
+                    <input type="text" name="name" class="w-full pl-10 bg-white border-gray-300 rounded" placeholder="Name" required>
                 </div>
             </div>
-
-            <div class="mb-2">
+            <div class="mb-2 ">
                 <label class="sr-only" for="email">E-mail</label>
-                <div class="flex items-center gap-2">
-                    <div class="flex items-center justify-center flex-shrink-0 p-2 rounded-full bg-light">
+                <div class="relative">
+                    <div class="absolute top-4 left-4 ">
                         <svg class="w-4 h-4 text-primary">
                             <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#mail" />
                         </svg>
                     </div>
-                    <input type="email" name="email" class="w-full px-4 py-1 text-sm border-transparent rounded-lg bg-light" placeholder="Email">
+                    <input type="email" name="email" class="w-full pl-10 bg-white border-gray-300 rounded" placeholder="Email">
                 </div>
             </div>
-
-            <div class="mb-2">
+            <div class="mb-2 ">
                 <label class="sr-only" for="country">Country</label>
-                <div class="flex items-center gap-2">
-                    <div class="flex items-center justify-center flex-shrink-0 p-2 rounded-full bg-light">
+                <div class="relative">
+                    <div class="absolute top-4 left-4 ">
                         <svg class="w-4 h-4 text-primary">
                             <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#flag" />
                         </svg>
                     </div>
-                    <input name="country" id="" class="w-full px-4 py-1 text-sm border-transparent rounded-lg bg-light" list="countries" placeholder="Country">
+                    <input name="country" id="" class="w-full pl-10 bg-white border-gray-300 rounded" list="countries" placeholder="Country">
                 </div>
             </div>
-
-            <div class="mb-2">
+            <div class="mb-2 ">
                 <label class="sr-only" for="phone">Phone Number</label>
-                <div class="flex items-center gap-2">
-                    <div class="flex items-center justify-center flex-shrink-0 p-2 rounded-full bg-light">
+                <div class="relative">
+                    <div class="absolute top-4 left-4 ">
                         <svg class="w-4 h-4 text-primary">
                             <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#phone" />
                         </svg>
                     </div>
-                    <input type="tel" name="phone" class="w-full px-4 py-1 text-sm border-transparent rounded-lg bg-light" placeholder="Phone No.">
+                    <input type="tel" name="phone" class="w-full pl-10 bg-white border-gray-300 rounded" placeholder="Phone No.">
                 </div>
             </div>
-
-            <div class="mb-2">
+            <div class="mb-2 ">
                 <label class="sr-only" for="">Message</label>
                 <div class="flex items-center">
-                    <textarea name="message" class="w-full px-4 py-1 text-sm border-transparent rounded-lg bg-light" placeholder="Message" required></textarea>
+                    <textarea name="message" class="w-full pl-10 bg-white border-gray-300 rounded" placeholder="Message" required></textarea>
                 </div>
             </div>
-
-            <div class="mt-8 text-right">
+            <div class="mb-2 ">
                 <div id="inquiry-g-recaptcha" data-sitekey="{{ config('constants.google_recaptcha') }}" data-callback="onSubmitEnquiry" data-size="invisible">
                 </div>
                 <input type="hidden" id="enquiry-recaptcha" name="enquiry-recaptcha">

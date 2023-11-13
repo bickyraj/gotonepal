@@ -19,11 +19,11 @@ if (session()->has('error_message')) {
                         Book {{$trip->name}}
                     </h1>
                     <nav aria-label="breadcrumb" class="mb-10">
-                        <ol class="flex gap-2">
-                            <li><a href="{{ route('home') }}">Home</a> / </li>
-                            <li><a href="{{ route('front.trips.listing') }}">Trips</a> / </li>
-                            <li><a href="{{ route('front.trips.show', $trip->slug) }}">{{ $trip->name }}</a> / </li>
-                            <li><a href="" aria-current="page">Book</a></li>
+                        <ol>
+                            <li class="inline"><a href="{{ route('home') }}">Home</a> / </li>
+                            <li class="inline"><a href="{{ route('front.trips.listing') }}">Trips</a> / </li>
+                            <li class="inline"><a href="{{ route('front.trips.show', $trip->slug) }}">{{ $trip->name }}</a> / </li>
+                            <li class="inline"><a href="" aria-current="page">Book</a></li>
                         </ol>
                     </nav>
                     <form id="captcha-form" action="{{ route('front.trips.booking.store') }}" method="POST">

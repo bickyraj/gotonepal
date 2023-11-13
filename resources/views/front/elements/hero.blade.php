@@ -7,11 +7,11 @@
                     {{ $title }}
                 </h1>
                 <nav aria-label="breadcrumb">
-                    <ol class="flex gap-2">
+                    <ol class="">
                         @foreach ($breadcrumbs as $key => $value)
-                            <li><a href="{{ $value }}">{{ $key }}</a> / </li>
+                            <li class="inline"><a href="{{ $value }}">{{ $key }}</a> / </li>
                         @endforeach
-                        <li><a href="" aria-current="page">{{ $title }}</a></li>
+                        <li class="inline"><a href="" aria-current="page">{{ $title }}</a></li>
                     </ol>
                 </nav>
             </div>

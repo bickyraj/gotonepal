@@ -384,4 +384,33 @@ class ActivityController extends Controller
 
         return 0;
     }
+
+    public function updateBlock1Status($id)
+    {
+        $success = false;
+        $message = "";
+
+        $trip = Activity::find($id);
+
+        if ($trip) {
+            if ($trip->block_1 == 1) {
+                $trip->block_1 = 0;
+            } else {
+                $trip->block_1 = 1;
+            }
+
+            if ($trip->save()) {
+                $message = "Activity has been featured.";
+                $success = true;
+            }
+        } else {
+            $message = __('alerts.not_found_error');
+        }
+
+        return response()->json([
+            'data' => [],
+            'success' => $success,
+            'message' => $message
+        ]);
+    }
 }

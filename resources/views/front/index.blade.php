@@ -82,7 +82,7 @@
             <div class="grid gap-10 lg:gap-20 lg:grid-cols-2">
                 <div>
                     <div class="mb-4">
-                        <p class="mb-2 text-2xl text-center font-handwriting text-primary">About Us</p>
+                        <p class="mb-2 text-2xl text-center font-handwriting text-primary">{{ Setting::get('homePage')['welcome']['sub_title'] ?? '' }}</p>
                         <div class="flex justify-center mb-8">
                             <h2 class="relative px-10 text-3xl font-bold text-center text-gray-600 font-display">
                                 {{ Setting::get('homePage')['welcome']['title'] ?? '' }}
@@ -161,41 +161,7 @@
             </div>
             <div class="grid gap-10 mb-4 lg:grid-cols-2">
                 @forelse ($reviews as $review)
-                    <div class="bg-white rounded-lg review">
-                        <div class="mb-4 review__content">
-                            <h3 class="mb-4 text-xl font-display">{{ $review->title }}</h3>
-                            <div class="prose">
-                                <p>{{ $review->review }}</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-4">
-                            @if ($review->thumbImageUrl)
-                                <img src="{{ $review->thumbImageUrl }}" alt="{{ $review->review_name }}" loading="lazy">
-                            @else
-                                <div class="flex items-center justify-center w-16 h-16 rounded-full bg-light text-primary">
-                                    @php
-                                        $words = explode(" ", $review->review_name);
-                                        $initials = null;
-                                        foreach ($words as $w) {
-                                            $initials .= $w[0];
-                                        }
-                                    @endphp
-                                    {{ $initials }}
-                                </div>
-                            @endif
-                            <div>
-                                <div class="font-bold">{{ ucfirst($review->review_name) }}</div>
-                                <div class="text-sm text-gray">{{ $review->review_country }}</div>
-                                <div class="flex">
-                                    @for ($i = 0; $i < 5; $i++)
-                                        <svg class="w-5 h-5 text-accent">
-                                            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#star" />
-                                        </svg>
-                                    @endfor
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @include('front.elements.review-card')
                 @empty
                 @endforelse
             </div>
@@ -208,7 +174,7 @@
         </div>
     </div>
 
-    {{-- Trip of the month --}}
+    {{-- Trip of the month / Block 3 --}}
     <div class="py-20 text-white bg-center bg-cover bg-primary-dark" style="background: linear-gradient(rgba(31,71,32, 0.8), rgba(31,71,32,0.8)), url('{{ asset('assets/front/img/mountains.jpg') }}');">
         <div class="container">
             <div class="flex flex-wrap items-center justify-between gap-10 mb-10">
@@ -245,6 +211,7 @@
         </div>
     </div>{{-- Trip of the month --}}
 
+
     {{-- Trips Block Three --}}
     <div class="py-20 featured bg-light">
         <div class="container">
@@ -253,30 +220,6 @@
                     {{-- <p class="mb-2 text-2xl text-center text-primary font-handwriting">Peak Climbing</p> --}}
                     <h2 class="relative px-10 mb-16 text-3xl font-bold text-center text-gray-600 font-display">
                         Peak Climbing
-                        <div class="absolute left-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
-                        <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
-                    </h2>
-                </div>
-            </div>
-
-            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-8">
-
-                @forelse ($block_3_trips as $block_3_tour)
-                    @include('front.elements.tour-card', ['tour' => $block_3_tour])
-                @empty
-                @endforelse
-            </div>
-        </div>
-    </div> {{-- Trips Block Three --}}
-
-    {{-- Trips Block Three --}}
-    <div class="py-20 featured bg-light">
-        <div class="container">
-            <div class="flex justify-center">
-                <div>
-                    {{-- <p class="mb-2 text-2xl text-center text-primary font-handwriting">Peak Climbing</p> --}}
-                    <h2 class="relative px-10 mb-16 text-3xl font-bold text-center text-gray-600 font-display">
-                        Hot Packages
                         <div class="absolute left-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
                         <div class="absolute right-0 w-6 h-1 rounded top-1/2 bg-accent"></div>
                     </h2>
@@ -426,23 +369,7 @@
 
             <div class="grid gap-10 mb-10 lg:grid-cols-3">
                 @forelse ($blogs as $blog)
-                    <a href="{{ route('front.blogs.show', $blog->slug) }}">
-                        <div class="article">
-                            <img src="{{ $blog->imageUrl }}" alt="{{ $blog->image_alt }}" loading="lazy" class="rounded-t-lg">
-                            <div class="flex items-center mt-6 mb-2 text-sm">
-                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                                {{ formatDate($blog->blog_date) }}
-                            </div>
-                            <h3 class="mb-4 text-xl font-display">{{ $blog->name }}</h3>
-                            <div class="prose">
-                                <p>
-                                    {{ truncate(strip_tags($blog->description)) }}
-                                </p>
-                            </div>
-                        </div>
-                    </a>
+                    @include('front.elements.blog-card')
                 @empty
                 @endforelse
             </div>

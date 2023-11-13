@@ -63,6 +63,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 	Route::get('teams/add', 'TeamController@create')->name('teams.add');
 	Route::get('teams/list', 'TeamController@teamList');
 	Route::post('teams', 'TeamController@store')->name('teams.store');
+    Route::get('/teams/update-block1/{id}', 'TeamController@updateBlock1Status');
 	Route::delete('teams/delete/{id}', 'TeamController@destroy')->name('teams.delete');
 
 	// banner routes
@@ -85,6 +86,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
 	// activity routes
 	Route::get('activities', 'ActivityController@index')->name('activities.index');
+    Route::get('/activities/update-block1/{id}', 'ActivityController@updateBlock1Status');
+
 	Route::get('activities/edit/{id}', 'ActivityController@edit')->name('activities.edit');
 	Route::post('activities/update', 'ActivityController@update')->name('activities.update');
 	Route::get('activities/add', 'ActivityController@create')->name('activities.add');
@@ -152,7 +155,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 	Route::post('trips/includes/update', 'TripController@updateTripIncludes')->name('trips.includes.update');
 	Route::post('trips/meta/update', 'TripController@updateTripMeta')->name('trips.meta.update');
 	Route::post('trips/itineraries/update', 'TripController@updateTripItineraries')->name('trips.itineraries.update');
-    Route::get('trips/slider/edit/{id}', 'TripController@editSlider')->name('trips.slider.edit');
+    Route::get('trips/gallery/edit/{id}', 'TripController@editSlider')->name('trips.slider.edit');
 	Route::post('trips/galleries/update', 'TripController@updateTripGallery')->name('trips.galleries.update');
 	Route::post('trips/galleries', 'TripController@storeTripGallery')->name('trips.galleries.store');
 	Route::get('trips/{trip_id}/galleries', 'TripController@getAllTripGallery')->name('trips.galleries.get-all-galleries');

@@ -10,49 +10,42 @@
 @endpush
 @section('content')
 
-<!-- Hero -->
-<section class="hero hero-alt relative">
-    <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="">
-    <div class="overlay absolute">
-        <div class="container ">
-            <h1 class="font-display upper">Write Review</h1>
-            <div class="breadcrumb-wrapper">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb fs-sm wrap">
-                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('front.reviews.index') }}">Reviews</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Write Review</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-</section>
+{{-- Hero --}}
+@include('front.elements.hero', [
+    'title' => 'Write a review',
+    'image' => asset('assets/front/img/hero.jpg'),
+    'breadcrumbs' => [
+        'Home' => route('home'),
+    ],
+])
 
-<section class="py-10">
+<section class="py-20">
     <div class="container">
-        <div class="grid lg:grid-cols-3 xl:grid-cols-4 gap-10">
-            <div class="lg:col-span-2 xl:col-span-3">
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo culpa necessitatibus commodi nisi ipsa quia velit, fuga rem accusantium odio quo et sit maxime magnam repellendus, eligendi laudantium dolore non?</p>
+        <div class="grid gap-10 lg:gap-20 lg:grid-cols-3">
+            <div class="lg:col-span-2">
+                <div class="mb-10 prose">
+                    <p>Your journey with us is not just a vacation; it's a story waiting to be told. We value your feedback and would love to hear about the moments that made your trip special. Your reviews provide valuable insights, helping us enhance our services and create unforgettable experiences for future travelers.</p>
+                </div>
                 <div class="mb-8">
                     <form id="review-form" action="{{ route('front.reviews.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group mb-4">
+                        <div class="mb-4 form-group">
                             <label for="photo" class="text-sm">Your Photo *</label>
                             <input type="file" class="form-control" name="image" id="photo" required>
                         </div>
-                        <div class="form-group mb-4">
+                        <div class="mb-4 form-group">
                             <label for="name" class="text-sm">Your Name *</label>
                             <input type="text" class="form-control" name="review_name" id="name" placeholder="Name" required>
                         </div>
-                        <div class="form-group mb-4">
+                        <div class="mb-4 form-group">
                             <label for="email" class="text-sm">Your E-mail *</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                         </div>
-                        <div class="form-group mb-4">
+                        <div class="mb-4 form-group">
                             <label for="country" class="text-sm">Country You Are From *</label>
                             <input name="country" id="country" class="form-control" list="countries" placeholder="Country" required>
                         </div>
-                        <div class="form-group mb-4">
+                        <div class="mb-4 form-group">
                             <label for="tour" class="text-sm">Tour Package *</label>
                             <select name="trip_id" id="tour" class="form-control" required>
                                 <option selected disabled>Tour Package</option>
@@ -61,32 +54,32 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group mb-4">
+                        <div class="mb-4 form-group">
                             <label for="title" class="text-sm">Short Title To Your Review *</label>
                             <input type="text" class="form-control" name="title" id="title" placeholder="Title" required>
                         </div>
-                        <div class="form-group mb-4">
+                        <div class="mb-4 form-group">
                             <label for="" class="text-sm">Message *</label>
-                            <textarea class="form-control block" name="review" id="message" rows="5" placeholder="Message"></textarea>
+                            <textarea class="block form-control" name="review" id="message" rows="5" placeholder="Message"></textarea>
                         </div>
-                        <div class="form-group mb-4" x-data="{value:5}">
+                        <div class="mb-4 form-group" x-data="{value:5}">
                             <label for="" class="text-sm">Rate us</label>
                             <input type="hidden" name="rating" :value="value">
-                            <div>
-                                <template x-for="i in value">
-                                    <svg class="w-6 h-6 text-accent" @click="value=i"><use xlink:href="{{ asset('assets/front/img/sprite.svg' )}}#star" /></svg>
-                                </template>
-                                <template x-if="value < 5">
-                                    <span>
+                            <div class="flex items-center gap-4">
+                                <div class="flex items-center">
+                                    <template x-for="i in value">
+                                        <svg class="w-8 h-8 text-accent" @click="value=i"><use xlink:href="{{ asset('assets/front/img/sprite.svg' )}}#star" /></svg>
+                                    </template>
+                                    <template x-if="value < 5">
                                         <template x-for="i in (5 - value)">
-                                            <svg class="w-6 h-6 text-accent" @click="value=value+i"><use xlink:href="{{ asset('assets/front/img/sprite.svg' )}}#staro" /></svg>
+                                            <svg class="w-8 h-8 text-accent" @click="value=value+i"><use xlink:href="{{ asset('assets/front/img/sprite.svg' )}}#staro" /></svg>
                                         </template>
-                                    </span>
-                                </template>
-                                <span class="text-xs text-gray" x-text="`${value} stars`"></span>
+                                    </template>
+                                </div>
+                                <span class="text-gray" x-text="`${value} stars`"></span>
                             </div>
                         </div>
-                        <div class="form-group mb-4">
+                        <div class="mb-4 form-group">
                             <div id="review-g-recaptcha"
                                   data-sitekey="{{ config('constants.google_recaptcha') }}"
                                   data-callback="onSubmitReview"
@@ -346,6 +339,7 @@
         </div>
     </div>
 </section>
+
 @endsection
 @push('scripts')
 <script src="{{ asset('assets/vendors/jquery-validation/dist/jquery.validate.min.js') }}"></script>

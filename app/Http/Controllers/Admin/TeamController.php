@@ -55,6 +55,7 @@ class TeamController extends Controller
         $team->position = $request->position;
         $team->sort_order = 0;
         $team->type = $request->type;
+        $team->phone = $request->phone;
         $team->slug = $this->create_slug_title($team->name);
         $team->status = 1;
 
@@ -189,6 +190,7 @@ class TeamController extends Controller
         $team->description = $request->description;
         $team->position = $request->position;
         $team->type = $request->type;
+        $team->phone = $request->phone;
         $team->slug = $this->create_slug_title($team->name);
         $team->status = 1;
 
@@ -372,6 +374,35 @@ class TeamController extends Controller
         $teams = Team::all();
         return response()->json([
             'data' => $teams
+        ]);
+    }
+
+    public function updateBlock1Status($id)
+    {
+        $success = false;
+        $message = "";
+
+        $trip = Team::find($id);
+
+        if ($trip) {
+            if ($trip->block_1 == 1) {
+                $trip->block_1 = 0;
+            } else {
+                $trip->block_1 = 1;
+            }
+
+            if ($trip->save()) {
+                $message = "Team has been featured.";
+                $success = true;
+            }
+        } else {
+            $message = __('alerts.not_found_error');
+        }
+
+        return response()->json([
+            'data' => [],
+            'success' => $success,
+            'message' => $message
         ]);
     }
 }

@@ -506,7 +506,7 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  @if(iterator_count($trip->trip_galleries))
+                                  @if($trip->trip_galleries && iterator_count($trip->trip_galleries))
                                     @foreach($trip->trip_galleries as $key => $gallery)
                                     <tr>
                                         <th scope="row">{{ $key + 1 }}</th>
@@ -546,7 +546,7 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  @if(iterator_count($trip->trip_sliders))
+                                  @if($trip->trip_sliders && iterator_count($trip->trip_sliders))
                                     @foreach($trip->trip_sliders as $key => $slider)
                                     <tr>
                                         <th scope="row">{{ $key + 1 }}</th>

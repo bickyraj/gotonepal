@@ -69,7 +69,7 @@ class TripController extends Controller
 
     public function search(Request $request)
     {
-        $keyword = $request->keyword;
+        $keyword = $request->q;
         $destination_ids = $request->dest;
         $activity_ids = $request->act;
         $sortBy = $request->price;
@@ -109,7 +109,7 @@ class TripController extends Controller
         $destinations = \App\Destination::where('status', '=', 1)->get();
         $activities = \App\Activity::where('status', '=', 1)->get();
 
-        return view('front.trips.search', compact('destinations', 'activities', 'trips'));
+        return view('front.trips.search', compact('keyword', 'destinations', 'activities', 'trips'));
     }
 
     public function searchAjax(Request $request)

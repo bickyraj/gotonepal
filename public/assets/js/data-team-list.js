@@ -64,6 +64,22 @@ var KTDatatableJsonRemoteDemo = function () {
 					field: 'name',
 					title: 'Name',
 				},
+                {
+                    field: 'block_1',
+                    title: 'Show',
+                    template: function (item) {
+                        return '\
+						<div class="col-3">\
+						  <span class="kt-switch kt-switch--sm kt-switch--icon">\
+						  <label>\
+						  <input type="checkbox" data-id="'+ item.id + '" ' + ((item.block_1 == 1) ? "checked" : "") + ' id="block1Switch" value="1" name="show_status">\
+						  <span></span>\
+						  </label>\
+						  </span>\
+						</div>\
+					';
+                    },
+                },
 				{
 					field: 'position',
 					title: 'Position'
@@ -102,6 +118,23 @@ var KTDatatableJsonRemoteDemo = function () {
 
 	};
 
+    $(document).on('change', '#block1Switch', function (e) {
+        var id = $(this).data('id');
+        var action_url = url + '/admin/teams/update-block1/' + id;
+        $.ajax({
+            url: action_url,
+            type: "GET",
+            dataType: "json",
+            async: "false",
+            success: function (res) {
+                Toast.fire({
+                    type: 'success',
+                    title: res.message
+                })
+            }
+        })
+    });
+
 	$(document).on('click', '.kt_sweetalert_delete_team', function(event) {
 		var e = $(this);
 
@@ -114,7 +147,7 @@ var KTDatatableJsonRemoteDemo = function () {
 		}).then(function(result) {
 		    if (result.value) {
 		    	var id = e.attr('data-id');
-		    	var action_url = url + '/admin/teams/delete/' + id; 
+		    	var action_url = url + '/admin/teams/delete/' + id;
 		    	$.ajax({
 		    		url: action_url,
 		    		type: "DELETE",

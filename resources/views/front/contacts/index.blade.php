@@ -25,8 +25,9 @@ if (session()->has('error_message')) {
         <div class="container">
             <div class="grid gap-10 lg:grid-cols-2 lg:gap-20">
                 <div>
-                    <p>Tell us more about your interest and we will respond your query within 12 hours !
-                    </p>
+                    <div class="mb-10 prose">
+                        <p>Tell us more about your interest and we will respond your query within 12 hours !</p>
+                    </div>
                     <div class="mb-8">
                         <form id="captcha-form" action="{{ route('front.contact.store') }}" method="POST">
                             @csrf

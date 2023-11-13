@@ -4,28 +4,31 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Bickyraj\Toc\Contents;
 use App\Blog;
+use TOC\MarkupFixer;
+use TOC\TocGenerator;
 
 class BlogController extends Controller
 {
 	public function index()
 	{
-		$blogs = Blog::latest()->get();
+		$blogs = Blog::where('status', 1)->orderBy('blog_date', 'desc')->paginate(12);
 		return view('front.blogs.index', compact('blogs'));
 	}
 
-	public function show($slug, Contents $contents)
+	public function show($slug)
 	{
 		$blog = Blog::where('slug', '=', $slug)->with('similar_blogs')->first();
-        if ($blog->toc != "") {
-            $contents->fromText($blog->toc)->setTags(['h2', 'h3', 'h4'])->setMinLength(100);
-            $body = $contents->getHandledText();
-            $contents = $contents->getContents();
-        } else {
-            $body = "";
-            $contents = [];
-        }
+		$toc = $blog->toc;
+		if ($toc != "") {
+			$markupFixer  = new MarkupFixer();
+			$tocGenerator = new TocGenerator();
+			$body = $markupFixer->fix($toc);
+			$contents = $tocGenerator->getHTMLMenu($body);
+		} else {
+			$body = "";
+			$contents = "";
+		}
 
 		$blogs = Blog::limit(3)->latest()->get();
 		return view('front.blogs.show', compact('blog', 'blogs', 'contents', 'body'));

@@ -111,6 +111,10 @@
                             <input type="text" name="position" class="form-control" aria-describedby="" placeholder="Position" required>
                         </div>
                         <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="text" name="phone" class="form-control" aria-describedby="" placeholder="Phone Number">
+                        </div>
+                        <div class="form-group">
                             <label>Description</label>
                             <div id="summernote-description" class="summernote"></div>
                         </div>

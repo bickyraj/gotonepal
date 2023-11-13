@@ -62,58 +62,18 @@
 
         {{-- Right --}}
         <div class="flex items-center gap-2">
-            <!-- Nav -->
-            @include('front.elements.navbar')
-
-            {{-- Search --}}
-            <button class="hidden p-2 rounded-full lg:block bg-light" @click="searchboxOpen=true;$refs.searchInput.focus()">
-                <svg class="w-6 h-6 text-primary hover:bg-primary hover:text-white">
-                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#search"></use>
-                </svg>
-            </button>
-
-            <div x-show="searchboxOpen" x-cloak class="absolute w-full max-w-5xl left-1/2 top-full" @click.away="searchboxOpen=false" style="transform: translateX(-50%)">
-                <div class="max-w-5xl px-4 mx-auto" x-data="headerSearch()" x-model="keyword" x-on:click.outside="reset()" x-on:keyup.esc="reset()" x-on:keyup.down="selectNext()"
-                    x-on:keyup.up="selectPrev()" x-init="$watch('keyword', () => selectedIndex = '')">
-                    <div class="relative max-w-xl mx-auto">
-                        <form action="{{ route('front.trips.search') }}" x-on:submit.prevent="handleSubmit($event.target)">
-                            <input type="search" name="q" class="w-full px-4 py-4 text-lg text-gray-600 border-2 border-white rounded-lg shadow focus:ring-0 focus:border-accent focus:outline-0"
-                                x-ref="searchInput" placeholder="Search Trips">
-                            <button
-                                class="absolute flex flex-col p-2 -translate-y-1/2 bg-gray-200 rounded-lg text-accent right-2 top-1/2 focus:bg-accent focus:text-white hover:bg-accent hover:text-white">
-                                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"></path>
-                                </svg>
-                            </button>
-                        </form>
-                        <div class="absolute w-full overflow-scroll rounded-lg max-h-96 top-[calc(100%+1rem)] border border-gray-200 shadow-lg" x-show="filteredTrips.length > 0"
-                            x-transition:enter="transition duration-500" x-transition:enter-start="translate-y-4">
-                            <ul x-ref="results">
-                                <template x-for="(trip, index) in filteredTrips" x-bind:key="trip.url">
-                                    <li
-                                        :class="{
-                                            'transition': true,
-                                            'bg-gray-100 hover:bg-gray-50': selectedIndex !== index,
-                                            'bg-light': selectedIndex === index,
-                                            'border-b border-gray-200': index !== filteredTrips.length
-                                        }">
-                                        <a x-bind:href="trip.url" class="block px-4 py-2">
-                                            <div class="flex gap-4">
-                                                <img :src="trip.image_url" alt="" class="object-cover w-16 h-16 rounded-lg">
-                                                <div class="flex-grow">
-                                                    <div class="text-lg" x-text="trip.name"></div>
-                                                    <div class="flex justify-between gap-2">
-                                                        <span class="text-sm text-gray-600" x-text="`${trip.duration} days`"></span>
-                                                        <span class="text-sm text-gray-600" x-text="`US $ ${trip.offer_price}`"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </template>
-                            </ul>
-                        </div>
-                    </div>
+            <div x-data="searchDropdown()">
+                <div class="flex ">
+                    @include('front.elements.navbar')
+                    {{-- Search --}}
+                    <button class="hidden p-3 lg:block" x-on:click="searchboxOpen=true;$nextTick(() => { $refs.headerSearchInput.focus(); });">
+                        <svg class="w-6 h-6 header-color">
+                            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#search"></use>
+                        </svg>
+                    </button>
+                </div>
+                <div x-show="searchboxOpen" x-cloak class="absolute w-full max-w-3xl left-1/2 top-[8rem] z-10" @click.away="searchboxOpen=false" style="transform: translateX(-50%)">
+                    @include('front.elements.trip-search-header')
                 </div>
             </div>
             {{-- Search --}}
@@ -137,15 +97,25 @@
 
 @push('scripts')
     <script>
-        function headerSearch() {
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('tripStore', {
+                init() {
+                    this.trips = JSON.parse(document.querySelector('#tripsJson').innerText);
+                },
+                trips: []
+            })
+        })
+
+        function searchDropdown() {
             return {
                 keyword: '',
                 selectedIndex: '',
+                trips: [],
                 get filteredTrips() {
                     if (this.keyword === '') {
                         return []
                     }
-                    return Alpine.store('search').trips.filter(trip => trip.name.toLowerCase().includes(this.keyword.toLowerCase()))
+                    return Alpine.store('tripStore').trips.filter(trip => trip.name.toLowerCase().includes(this.keyword.toLowerCase()))
                 },
                 reset() {
                     this.keyword = ''
@@ -186,16 +156,6 @@
                 }
             }
         }
-
-        console.log(headerSearch());
-        document.addEventListener('alpine:init', () => {
-            Alpine.store('search', {
-                init() {
-                    this.trips = JSON.parse(document.querySelector('#tripsJson').innerText);
-                },
-                trips: [],
-            })
-        });
     </script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="{{ asset('assets/js/search-trips.js') }}"></script>

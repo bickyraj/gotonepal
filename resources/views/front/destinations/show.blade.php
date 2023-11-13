@@ -97,7 +97,7 @@
 
                     <p>To begin your exploration, the Himalayas stand as Nepal's crown jewel, offering breathtaking vistas and thrilling treks. Mount Everest, the world's highest peak, beckons adventure enthusiasts to conquer its summit, while the Annapurna Circuit invites trekkers to experience the mesmerizing beauty of the Annapurna mountain range. Whether you're an experienced mountaineer or a beginner hiker, Nepal offers a range of trekking options suited to various skill levels. </p>  --}}
 
-                    <a href="" class="btn btn-accent" style="text-decoration:none;">View Full Guide</a>
+                    <a href="{{ url(strtolower($destination->name) . '-travel-guide') }}" class="btn btn-accent" style="text-decoration:none;">View Full Guide</a>
                 </div>
                 @if (!empty($destination->tour_guide_image_name))
                     <div class><img src="{{ $destination->tour_guide_image_url }}"></div>

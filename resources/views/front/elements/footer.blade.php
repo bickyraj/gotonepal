@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <img src="{{ asset('assets/front/img/webpage_art.webp') }}" width="1920" height="275" alt="Art representing various natural and cultutal heritages of Nepal" class="w-full h-auto -mt-40"
+    <img src="{{ asset('assets/front/img/webpage_art.webp') }}" width="1920" height="384" alt="Art representing various natural and cultutal heritages of Nepal" class="w-full h-auto min-h-[15rem] object-cover -mt-40"
         loading="lazy">
 </div><!-- Newsletter -->
 
@@ -49,21 +49,20 @@
             <div class="col-span-2 mb-4 lg:col-span-1">
                 <h1 class="text-xl text-white font-display">Quick Links</h1>
                 <ul>
-                    @if ($footer3)
-                        @foreach ($footer3 as $menu)
+                    @if ($footer1)
+                        @foreach ($footer1 as $menu)
                             <li class="text-sm">
                                 <a href="{!! $menu->link ? $menu->link : 'javascript:;' !!}">{{ $menu->name }}</a>
                             </li>
                         @endforeach
                     @endif
                 </ul>
-
             </div>
             <div class="col-span-2 mb-4 lg:col-span-1">
                 <h1 class="text-xl text-white font-display">Top Activities</h1>
                 <ul>
-                    @if ($footer1)
-                        @foreach ($footer1 as $menu)
+                    @if ($footer2)
+                        @foreach ($footer2 as $menu)
                             <li class="text-sm">
                                 <a href="{!! $menu->link ? $menu->link : 'javascript:;' !!}">{{ $menu->name }}</a>
                             </li>

@@ -618,7 +618,7 @@ if (session()->has('error_message')) {
                     @if (iterator_count($trip->trip_sliders))
                         <div id="gallery" class="px-4 py-10 mb-4 bg-white tds lg:px-10">
                             <h2 class="text-3xl font-display text-primary">Gallery</h2>
-                            <div class="grid grid-cols-4 gap-4">
+                            <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
                                 @foreach ($trip->trip_sliders as $trip_slider)
                                     <a href="{{ $trip_slider->imageUrl }}" data-fancybox="tripGallery">
                                         <img src="{{ $trip_slider->imageUrl }}" loading="lazy" class="object-cover aspect-square">
@@ -852,7 +852,7 @@ if (session()->has('error_message')) {
                 <aside>
                     @include('front.elements.price_card')
 
-                    <a href="" class="w-full mb-8 btn btn-primary">Ask for agency price</a>
+                    <a href="{{ route('front.contact.index')}}" class="w-full mb-8 btn btn-primary">Ask for agency price</a>
 
                     @include('front.elements.enquiry')
 

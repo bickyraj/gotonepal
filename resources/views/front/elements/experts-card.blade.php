@@ -1,27 +1,31 @@
 <div class="p-4 bg-white">
-    <div class="flex justify-between gap-4">
-        <div class="col-span-2">
-            <p class="mb-0 font-handwriting">Still confused?</p>
-            <h3 class="mb-2 text-lg">Talk to our experts</h3>
-        </div>
-        <svg class="flex-shrink-0 w-16 h-16 rounded-full text-primary bg-light">
-            <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#customersupport" />
-        </svg>
-    </div>
-    <div class="flex mb-1 experts-phone">
+    <p class="mb-0 text-lg font-handwriting">Still confused?</p>
+    <h3 class="mb-2 text-2xl font-bold font-display text-primary">Talk to our experts</h3>
+    <div class="flex justify-center"><img src="{{ asset('assets/front/img/support.webp')}}" alt="" class="w-48 mb-6"></div>
+    <div class="flex mb-2 experts-phone">
         <a href="{{ Setting::get('mobile1') }}" class="flex items-center gap-2 text-sm">
-            <svg class="w-5 h-5 text-primary">
-                <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#phone" />
-            </svg>
-            {{ Setting::get('mobile1') }}
+            <div class="flex items-center justify-center w-8 h-8 rounded bg-accent">
+                <svg class="w-5 h-5 text-white">
+                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#phone" />
+                </svg>
+            </div>
+            <div>
+                <div class="font-bold text-gray-600">Call us</div>
+                <span class="text-lg">{{ Setting::get('mobile1') }}</span>
+            </div>
         </a>
     </div>
-    <div class="flex mb-3 experts-phone">
+    <div class="flex mb-4 experts-phone">
         <a href="mailto:{{ Setting::get('email') }}" class="flex items-center gap-2 text-sm">
-            <svg class="w-5 h-5 text-primary">
-                <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#mail" />
-            </svg>
-            {{ Setting::get('email') }}
+            <div class="flex items-center justify-center w-8 h-8 rounded bg-accent">
+                <svg class="w-5 h-5 text-white">
+                    <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#mail" />
+                </svg>
+            </div>
+            <div>
+                <div class="font-bold text-gray-600">Write to us</div>
+                <span class="text-lg">{{ Setting::get('email') }}</span>
+            </div>
         </a>
     </div>
 </div>

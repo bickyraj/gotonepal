@@ -1,44 +1,36 @@
 @section('title', $blog->name)
 @extends('layouts.front')
 @section('content')
-    <!-- Hero -->
-    <section class="relative hero hero-alt">
-        <img src="{{ $blog->imageUrl }}" alt="">
-        <div class="absolute py-10 overlay">
-            <div class="container text-white">
-                <h1 class="mb-4">{{ $blog->name }}</h1>
-                <div class="breadcrumb-wrapper">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb fs-sm wrap">
-                            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('front.blogs.index') }}">Blog</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">{{ $blog->name }}</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </section>
+    {{-- Hero --}}
+    @include('front.elements.hero', [
+        'title' => $blog->name,
+        'image' => $blog->imageUrl,
+        'breadcrumbs' => [
+            'Home' => route('home'),
+            'Blog' => route('front.blogs.index'),
+        ],
+    ])
 
     <section class="container grid gap-10 py-20 lg:grid-cols-3 xl:gap-20">
         <div class="lg:col-span-2">
 
-            @if ($contents)
-                <div class="mb-10 prose">{!! $blog->description !!}</div>
-                <div class="p-4 mb-10 prose bg-gray">
-                    <h2>Table of Content</h2>
-                    <div class="row">
-                        @if (!empty($contents))
-                            @include('bickyraj.toc.table', $contents)
-                        @endif
-                    </div>
-                </div>
+            <p class="mb-10">Published {{ formatDate($blog->blog_date) }}</p>
 
-                <div class="mb-10 prose">
+            @if (strip_tags($blog->description)!== '')
+                <div class="mb-10 prose">{!! $blog->description !!}</div>
+            @endif
+
+            <div class="p-4 mb-10 bg-gray-100 lg:hidden">
+                <h2 class="mb-4 text-primary">Table of Contents</h2>
+                <div class="prose prose-a:no-underline prose-li:list-none">
+                    {!! $contents !!}
+                </div>
+            </div>
+            
+            @if ($contents)
+                <div class="mb-10 prose prose-headings:text-primary">
                     {!! $body !!}
                 </div>
-            @else
-                <div class="mb-10 prose">{!! $blog->description !!}</div>
             @endif
             <div class="mb-10">
                 <div class="mb-4 text-lg font-bold text-light-gray">Share this article</div>
@@ -80,15 +72,23 @@
         </div>
 
         <aside>
-            <div class="mb-10">
-                <h2 class="mb-6 text-2xl text-gray-600 font-display">Latest articles</h2>
-                <div class="grid gap-4">
-                    @foreach ($blogs as $blog)
-                        <a href="{{ route('front.blogs.show', $blog->slug) }}" class="hover:text-primary">
-                            <h3>{{ $blog->name }}</h3>
-                            <div class="text-sm text-light-gray">{{ $blog->formatted_date }}</div>
-                        </a>
-                    @endforeach
+            <div class="sticky top-10">
+                <div class="hidden p-4 mb-10 bg-gray-100 lg:block">
+                    <h2 class="mb-4 text-primary">Table of Contents</h2>
+                    <div class="prose prose-a:no-underline prose-li:list-none">
+                        {!! $contents !!}
+                    </div>
+                </div>
+                <div class="mb-10">
+                    <h2 class="mb-6 text-xl text-gray-600 font-display">Latest articles</h2>
+                    <div class="grid gap-4">
+                        @foreach ($blogs as $blog)
+                            <a href="{{ route('front.blogs.show', $blog->slug) }}" class="text-lg hover:text-primary">
+                                <h3>{{ $blog->name }}</h3>
+                                <div class="text-sm text-light-gray">{{ $blog->formatted_date }}</div>
+                            </a>
+                        @endforeach
+                    </div>
                 </div>
             </div>
             {{-- @include('front.elements.enquiry-form') --}}

@@ -79,7 +79,7 @@ class BlogController extends Controller
 
                 $image_quality = 100;
 
-                if (($blog->image_size/1000000) > 1) {
+                if (($blog->image_size / 1000000) > 1) {
                     $image_quality = 75;
                 }
 
@@ -198,7 +198,7 @@ class BlogController extends Controller
 
                 $image_quality = 100;
 
-                if (($blog->image_size/1000000) > 1) {
+                if (($blog->image_size / 1000000) > 1) {
                     $image_quality = 75;
                 }
 

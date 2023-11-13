@@ -112,6 +112,10 @@
                             <input type="text" value="{{ $team->position }}" name="position" class="form-control" aria-describedby="" placeholder="Position" required>
                         </div>
                         <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="text" value="{{ $team->phone }}" name="phone" class="form-control" aria-describedby="" placeholder="Phone Number">
+                        </div>
+                        <div class="form-group">
                             <label>Description</label>
                             <div id="summernote-description" class="summernote">
                             </div>
@@ -306,7 +310,7 @@ $(function() {
         async: false,
         success: function(res) {
             if (res.status === 1) {
-                location.href = '{{ route('admin.teams.index') }}';
+                location.href = `{{ route('admin.teams.index') }}`;
             }
         }
     });

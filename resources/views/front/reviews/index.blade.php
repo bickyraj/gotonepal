@@ -14,47 +14,26 @@ if (session()->has('error_message')) {
     <script src="https://www.google.com/recaptcha/api.js?onload=CaptchaCallback&render=explicit" async defer></script>
 @endpush
 @section('content')
-    <!-- Hero -->
-    <section class="hero hero-alt relative">
-        <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="" style="height: 300px;">
-        <div class="overlay absolute">
-            <div class="container ">
-                <h1 class="font-display upper">Reviews</h1>
-                <div class="breadcrumb-wrapper">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb fs-sm wrap">
-                            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Reviews</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-    </section>
+    {{-- Hero --}}
+    @include('front.elements.hero', [
+        'title' => 'Reviews',
+        'image' => asset('assets/front/img/hero.jpg'),
+        'breadcrumbs' => [
+            'Home' => route('home'),
+        ],
+    ])
 
-    <section class="py-10">
+    <section class="py-20">
         <div class="container">
-            <div class="grid lg:grid-cols-3 xl:grid-cols-4 gap-10">
-                <div class="lg:col-span-2 xl:col-span-3">
-                    <div class="grid lg:grid-cols-1 gap-2 lg:gap-3">
+            <div class="grid gap-10 lg:gap-20 lg:grid-cols-3">
+                <div class="lg:col-span-2">
+                    <div class="grid gap-20 mb-10">
                         @forelse ($reviews as $review)
-                            <div class="review p-4">
-                                <div class="review__content">
-                                    <h2 class="mb-2 font-display text-2xl text-primary">{{ $review->title }}</h2>
-                                    <p>{{ $review->review }}</p>
-                                </div>
-                                <div class="flex items-center">
-                                    <div class="mr-2">
-                                        <img src="{{ $review->thumbImageUrl }}" alt="">
-                                    </div>
-                                    <div>
-                                        <div class="font-bold">{{ ucfirst($review->review_name) }}</div>
-                                        <div class="text-sm text-gray">{{ $review->review_country }}</div>
-                                    </div>
-                                </div>
-                            </div>
+                            @include('front.elements.review-card')
                         @empty
                         @endforelse
                     </div>
+                    {{ $reviews->links('pagination.default')}}
                 </div>
                 <aside>
                     <a href="{{ route('front.reviews.create') }}" class="mb-4 btn btn-accent">Write a review</a>

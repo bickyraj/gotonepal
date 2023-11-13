@@ -14,23 +14,14 @@ if (session()->has('error_message')) {
     <script src="https://www.google.com/recaptcha/api.js?onload=CaptchaCallback&render=explicit" async defer></script>
 @endpush
 @section('content')
-    <!-- Hero -->
-    <section class="relative hero hero-alt">
-        <img src="{{ asset('assets/front/img/hero.jpg') }}" alt="" style="border-radius: 0px;height: 500px;">
-        <div class="absolute overlay">
-            <div class="container ">
-                <h1 class="font-display upper">Our Team</h1>
-                <div class="breadcrumb-wrapper">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb fs-sm wrap">
-                            <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Our Team</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </section>
+   {{-- Hero --}}
+   @include('front.elements.hero', [
+    'title' => 'Our Team',
+    'image' => asset('assets/front/img/hero.jpg'),
+    'breadcrumbs' => [
+        'Home' => route('home'),
+    ],
+])
 
     <section class="py-10">
         <div class="container" x-data="{ active: 'administration' }">

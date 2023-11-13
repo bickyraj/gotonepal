@@ -10,7 +10,9 @@
             </div>
         </div>
     </div>
-    <div class="offer">{{ $tour->best_value }}</div>
+    @if (trim($tour->best_value))
+        <div class="offer">{{ $tour->best_value }}</div>
+    @endif
     <div class="flex flex-col justify-between bottom flex-grow-1">
         <div class="flex flex-col p-4 flex-grow-1">
             {{-- Activity badge --}}
@@ -72,11 +74,11 @@
                                 from
                             </span>
                             <s class="font-bold text-red">
-                                USD {{ number_format($tour->cost, 2) }}
+                                US$ {{ number_format($tour->cost, 2) }}
                             </s>
                         </div>
                         <div class="text-gray-500 font-display">
-                            <span>USD</span>
+                            <span>US$</span>
                             @php
                                 $price_arr = explode('.', number_format($tour->offer_price, 2));
                             @endphp
