@@ -341,7 +341,7 @@ body {
 .hero-alt {
   background: rgb(131, 199, 212);
   background: linear-gradient(225deg, rgba(131, 199, 212, 1), rgba(40, 143, 236, 1));
-  min-height: 400px;
+  /*min-height: 400px;*/
 }
 @media(min-width:992px) {
   .hero-alt {
@@ -351,7 +351,7 @@ body {
 .hero-alt img {
   display: block;
   width: 100%;
-  max-height: 512px;
+  max-height: 565px;
   -o-object-fit: cover;
   object-fit: cover;
 }

@@ -5,7 +5,7 @@
 <link href="./assets/vendors/bootstrap-rating-master/bootstrap-rating.css" rel="stylesheet">
 @endpush
 @section('content')
-<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+<div class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
     <div class="row">
         <div class="col">
             <!--begin::Portlet-->
@@ -19,7 +19,7 @@
                               Add Trip
                           </h3>
                       </div>
-                      <div class="kt-form__actions mt-3">
+                      <div class="mt-3 kt-form__actions">
                           <a href="{{ route('admin.trips.index') }}" class="btn btn-sm btn-secondary">Cancel</a>
                       </div>
                   </div>
@@ -194,33 +194,37 @@
                           <hr>
                           <div class="form-group">
                             <label >Choose Similar Trips</label>
-                            <div class="kt-checkbox-list">
-                              @if(iterator_count($trips))
-                                @foreach($trips as $trip)
-                                <label class="kt-checkbox kt-checkbox--brand">
-                                  <input type="checkbox" name="similar_trips[]" value="{{ $trip->id }}"> {{ $trip->name }}
-                                  <span></span>
-                                </label>
-                                @endforeach
-                              @else
-                                <p>No trips added.</p>
-                              @endif
+                            <div style="max-height: 20rem; overflow-y:auto;">
+                              <div class="kt-checkbox-list" style="columns: 2">
+                                @if(iterator_count($trips))
+                                  @foreach($trips as $trip)
+                                  <label class="kt-checkbox kt-checkbox--brand">
+                                    <input type="checkbox" name="similar_trips[]" value="{{ $trip->id }}"> {{ $trip->name }}
+                                    <span></span>
+                                  </label>
+                                  @endforeach
+                                @else
+                                  <p>No trips added.</p>
+                                @endif
+                              </div>
                             </div>
                           </div>
                           <hr>
                           <div class="form-group">
                             <label >Choose Addon Trips</label>
-                            <div class="kt-checkbox-list">
-                              @if(iterator_count($trips))
-                                @foreach($trips as $trip)
-                                <label class="kt-checkbox kt-checkbox--brand">
-                                  <input type="checkbox" name="addon_trips[]" value="{{ $trip->id }}"> {{ $trip->name }}
-                                  <span></span>
-                                </label>
-                                @endforeach
-                              @else
-                                <p>No trips added.</p>
-                              @endif
+                            <div style="max-height: 20rem; overflow-y:auto;">
+                              <div class="kt-checkbox-list" style="columns: 2">
+                                @if(iterator_count($trips))
+                                  @foreach($trips as $trip)
+                                  <label class="kt-checkbox kt-checkbox--brand">
+                                    <input type="checkbox" name="addon_trips[]" value="{{ $trip->id }}"> {{ $trip->name }}
+                                    <span></span>
+                                  </label>
+                                  @endforeach
+                                @else
+                                  <p>No trips added.</p>
+                                @endif
+                              </div>
                             </div>
                           </div>
                           <hr>
@@ -409,8 +413,8 @@
                         {{-- Itinerary --}}
                         <div class="tab-pane" data-index="5" id="kt_tabs_1_5" role="tabpanel">
                           <div class="row">
-                            <div class="col-lg-9 mb-5">
-                              <div class="row mb-3">
+                            <div class="mb-5 col-lg-9">
+                              <div class="mb-3 row">
                                 <div class="col">
                                   <button id="add-itinerary-btn" class="btn btn-sm btn-outline-brand pull-right"><i class="flaticon2-plus"></i> Add Itinerary</button>
                                 </div>
@@ -419,7 +423,7 @@
                               <div id="itinerary-block" data-n="1">
                                 <div class="form-group itinerary-group">
                                   <div class="kt-timeline-v2 travel-timeline">
-                                      <div class="kt-timeline-v2__items  kt-padding-top-25 kt-padding-bottom-30">
+                                      <div class="kt-timeline-v2__items kt-padding-top-25 kt-padding-bottom-30">
                                           <div class="kt-timeline-v2__item">
                                               <span class="kt-timeline-v2__item-time">Day <span class="day-number">1</span></span>
                                               <div class="kt-timeline-v2__item-cricle">
@@ -429,10 +433,10 @@
                                                 <div class="itinerary-block-action">
                                                   <div>
                                                     <button type="button" title="remove" class="btn btn-outline-danger btn-sm btn-elevate-hover btn-icon pull-right remove-itinerary"><i class="fa fa-times"></i></button>
-                                                    <div title="move" class="btn btn-outline-brand btn-sm btn-elevate-hover btn-icon pull-right move-itinerary mr-1"><i class="la la-unsorted"></i></div>
+                                                    <div title="move" class="mr-1 btn btn-outline-brand btn-sm btn-elevate-hover btn-icon pull-right move-itinerary"><i class="la la-unsorted"></i></div>
                                                   </div>
                                                 </div>
-                                                <input type="text" name="trip_itineraries[][name]" id="input-trip-name" class="form-control mb-3 form-control-sm" name="trip_seo[canonical_url]" placeholder="Title">
+                                                <input type="text" name="trip_itineraries[][name]" id="input-trip-name" class="mb-3 form-control form-control-sm" name="trip_seo[canonical_url]" placeholder="Title">
                                                 <div class="itinerary-description-block">
                                                   <div id="summernote-itinerary-1" class="summernote"></div>
                                                 </div>
@@ -619,7 +623,7 @@ $(function() {
       var div = '\
       <div class="form-group itinerary-group">\
         <div class="kt-timeline-v2 travel-timeline">\
-            <div class="kt-timeline-v2__items  kt-padding-top-25 kt-padding-bottom-30">\
+            <div class="kt-timeline-v2__items kt-padding-top-25 kt-padding-bottom-30">\
                 <div class="kt-timeline-v2__item">\
                     <span class="kt-timeline-v2__item-time">Day <span class="day-number">'+n+'</span></span>\
                     <div class="kt-timeline-v2__item-cricle">\
@@ -629,10 +633,10 @@ $(function() {
                       <div class="itinerary-block-action">\
                         <div>\
                           <button type="button" title="remove" class="btn btn-outline-danger btn-sm btn-elevate-hover btn-icon pull-right remove-itinerary"><i class="fa fa-times"></i></button>\
-                            <div title="move" class="btn btn-outline-brand btn-sm btn-elevate-hover btn-icon pull-right move-itinerary mr-1"><i class="la la-unsorted"></i></div>\
+                            <div title="move" class="mr-1 btn btn-outline-brand btn-sm btn-elevate-hover btn-icon pull-right move-itinerary"><i class="la la-unsorted"></i></div>\
                         </div>\
                       </div>\
-                      <input type="text" name="trip_itineraries[][name]" id="input-trip-name" class="form-control mb-3 form-control-sm" name="trip_seo[canonical_url]" placeholder="Title">\
+                      <input type="text" name="trip_itineraries[][name]" id="input-trip-name" class="mb-3 form-control form-control-sm" name="trip_seo[canonical_url]" placeholder="Title">\
                       <div class="itinerary-description-block">\
                         <div id="summernote-itinerary-'+n+'" class="summernote"></div>\
                       </div>\

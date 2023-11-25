@@ -166,6 +166,11 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
+         * Package Service Providers...
+         */
+        // Bickyraj\Hbl\HblServiceProvider::class,
+
+        /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
@@ -175,7 +180,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
         App\Providers\SettingServiceProvider::class,
-        Bickyraj\Toc\TocServiceProvider::class,
+        // Bickyraj\Toc\TocServiceProvider::class,
     ],
 
     /*

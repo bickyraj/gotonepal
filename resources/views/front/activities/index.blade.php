@@ -79,8 +79,9 @@
         </div>
     </div>
 </section>
-
+{{--
 @include('front.elements.plan_trip')
+--}}
 
 <!-- Trip of the month -->
     <div class="py-10 text-white bg-primary">

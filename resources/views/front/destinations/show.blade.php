@@ -167,8 +167,9 @@
             </div>
         </div>
     </section>
-
+{{--
     @include('front.elements.plan_trip')
+--}}
 
 @endsection
 @push('scripts')

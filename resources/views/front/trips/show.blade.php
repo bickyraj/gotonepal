@@ -341,7 +341,7 @@ if (session()->has('error_message')) {
                                             Transportation
                                         </div>
                                         <div>
-                                            {{ $trip->trip_info->transportation ?? '' }}
+                                            <?= $trip->trip_info->transportation ?? '' ?>
                                         </div>
                                     </div>
                                 </div>
@@ -373,7 +373,7 @@ if (session()->has('error_message')) {
                                             Accomodation
                                         </div>
                                         <div>
-                                            {{ $trip->trip_info->accomodation ?? '' }}
+                                            <?= $trip->trip_info->accomodation ?? '' ?>
                                         </div>
                                     </div>
                                 </div>
@@ -389,7 +389,7 @@ if (session()->has('error_message')) {
                                             Meals
                                         </div>
                                         <div>
-                                            {{ $trip->trip_info->meals ?? '' }}
+                                            <?= $trip->trip_info->meals ?? '' ?>
                                         </div>
                                     </div>
                                 </div>
@@ -728,14 +728,7 @@ if (session()->has('error_message')) {
                                                 <img src="{{ $review->thumbImageUrl }}" alt="{{ $review->review_name }}" loading="lazy">
                                             @else
                                                 <div class="flex items-center justify-center w-16 h-16 rounded-full bg-light text-primary">
-                                                    @php
-                                                        $words = explode(" ", $review->review_name);
-                                                        $initials = null;
-                                                        foreach ($words as $w) {
-                                                            $initials .= $w[0];
-                                                        }
-                                                    @endphp
-                                                    {{ $initials }}
+                                                   {{ $review->review_name[0] }}
                                                 </div>
                                             @endif
                                             <div>

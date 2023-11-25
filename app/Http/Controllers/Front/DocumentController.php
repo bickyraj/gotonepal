@@ -10,7 +10,7 @@ class DocumentController extends Controller
 {
 	public function index()
 	{
-		$documents = Document::latest()->get();
+		$documents = Document::orderBy('id')->get();
 		return view('front.documents.index', compact('documents'));
 	}
 }

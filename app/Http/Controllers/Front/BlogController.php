@@ -30,7 +30,7 @@ class BlogController extends Controller
 			$contents = "";
 		}
 
-		$blogs = Blog::limit(3)->latest()->get();
+		$blogs = Blog::limit(4)->orderBy('blog_date', 'desc')->get();
 		return view('front.blogs.show', compact('blog', 'blogs', 'contents', 'body'));
 	}
 }

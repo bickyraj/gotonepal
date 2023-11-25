@@ -175,7 +175,7 @@ $(function() {
     $('#summernote-description').summernote({
       height: 400
     });
-    $('#summernote-description').summernote("code", '<?= $region->description; ?> ');
+    $('#summernote-description').summernote("code", ` <?= $region->description; ?> `);
   }
 	$("#add-form-page").validate({
 		submitHandler: function(form, event) {

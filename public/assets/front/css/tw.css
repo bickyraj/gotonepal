@@ -2106,6 +2106,10 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(255 0 105 / var(--tw-bg-opacity));
 }
+.hover\:bg-\[\#ff0000\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 0 0 / var(--tw-bg-opacity));
+}
 .hover\:bg-accent:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(246 156 39 / var(--tw-bg-opacity));

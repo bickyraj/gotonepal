@@ -8,7 +8,7 @@
         <div id="banner-slider" class="hero-slider">
             @forelse ($banners as $banner)
                 <div class="relative slide banner">
-                    <img src="{{ $banner->thumbImageUrl }}" data-img="{{ $banner->imageUrl }}" class="block w-full h-96 lg:h-[80vh] object-cover lazyload" alt="{{ $banner->name }}" width="1500"
+                    <img src="{{ $banner->imageUrl }}" data-img="{{ $banner->imageUrl }}" class="block w-full h-96 lg:h-[80vh] object-cover lazyload" alt="{{ $banner->name }}" width="1500"
                         height="1000">
                     <div class="absolute w-full py-4 text lg:py-6">
                         <div class="container">

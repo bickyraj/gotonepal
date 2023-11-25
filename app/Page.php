@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model
 {
-	protected $guarded = ['id'];
+    protected $guarded = ['id'];
 
     protected $appends = ['imageUrl', 'thumbImageUrl', 'link'];
 
@@ -17,21 +17,21 @@ class Page extends Model
     {
         return $this->morphMany('App\MenuItem', 'menu_itemable');
     }
-    
+
     public function getImageUrlAttribute()
     {
         if (isset($this->attributes['image_name']) && !empty($this->attributes['image_name'])) {
             $image_url = url('/storage/pages');
-        	return $image_url . '/' . $this->attributes['id'] . '/' . $this->attributes['image_name'];
+            return $image_url . '/' . $this->attributes['id'] . '/' . $this->attributes['image_name'];
         }
-        return config('constants.default_hero_banner');
+        return asset('assets/front/img/hero.jpg');
     }
 
     public function getThumbImageUrlAttribute()
     {
         if (isset($this->attributes['image_name']) && !empty($this->attributes['image_name'])) {
             $image_url = url('/storage/pages');
-        	return $image_url . '/' . $this->attributes['id'] . '/thumb_' . $this->attributes['image_name'];
+            return $image_url . '/' . $this->attributes['id'] . '/thumb_' . $this->attributes['image_name'];
         }
         return config('constants.default_image_url');
     }

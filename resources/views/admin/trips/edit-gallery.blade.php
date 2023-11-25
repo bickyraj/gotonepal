@@ -6,7 +6,7 @@ $route = str_replace(':ID', $slider->trip_id, route('admin.trips.edit', [':ID'])
 <link href="./assets/vendors/cropperjs/dist/cropper.min.css" rel="stylesheet">
 @endpush
 @section('content')
-<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+<div class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
     <div class="row">
         <div class="col">
             <!--begin::Portlet-->
@@ -22,7 +22,7 @@ $route = str_replace(':ID', $slider->trip_id, route('admin.trips.edit', [':ID'])
                                 Edit Trip Gallery
                             </h3>
                         </div>
-                        <div class="kt-form__actions mt-3">
+                        <div class="mt-3 kt-form__actions">
                             <a href="{{ route('admin.trips.edit', $slider->trip_id) }}" class="btn btn-sm btn-secondary">Cancel</a>
                             <button type="submit" class="btn btn-sm btn-primary">
                               <i class="flaticon2-check-mark"></i>

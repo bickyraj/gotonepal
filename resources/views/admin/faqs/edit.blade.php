@@ -77,7 +77,7 @@ $(function() {
     $('#summernote-content').summernote({
       height: 400
     });
-    $('#summernote-content').summernote("code", '<?= $faq->content; ?> ');
+    $('#summernote-content').summernote("code", `<?= $faq->content; ?> `);
   }
   $("#add-form-faq").validate({
     submitHandler: function(form, event) {

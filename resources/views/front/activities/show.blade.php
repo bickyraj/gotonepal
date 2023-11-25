@@ -56,8 +56,8 @@
     </section>
 
     <section class="pt-5">
-        <div class="container" style="padding-top: 40px; max-width:1100px;">
-            <div class="mb-4">
+        <div class="container" style="padding-top: 40px; max-width:900px;">
+            <div class="relative mb-4 tour-details-section prose">
                 @if (strip_tags($activity->description) != '')
                     <div class="mb-4 relative" x-data="{ expanded: false }">
                         <div x-show="expanded" class="pb-20" x-collapse.min.200px><?= $activity->description ?></div>
@@ -389,8 +389,9 @@
             </div>
         </div>
     </section>
-
+{{--
     @include('front.elements.plan_trip')
+--}}
 
 @endsection
 @push('scripts')

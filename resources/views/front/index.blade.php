@@ -179,7 +179,7 @@
         <div class="container">
             <div class="flex flex-wrap items-center justify-between gap-10 mb-10">
                 <div>
-                    <p class="mb-2 text-2xl text-white font-handwriting">This doesn't get any better</p>
+                    <!--<p class="mb-2 text-2xl text-white font-handwriting">This doesn't get any better</p>-->
                     <div class="flex">
                         <h2 class="relative pr-10 text-4xl font-bold font-display">
                             {{ Setting::get('homePage')['trip_block_3']['title'] ?? '' }}
@@ -332,7 +332,7 @@
                     <div class="text-5xl font-handwriting">Video Profile</div>
                 </h2>
                 <div class="text-center">
-                    <a href="#" class="inline-flex gap-2">
+                    <a href="https://www.gotonepal.com/videos" class="inline-flex gap-2">
                         More videos
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clip-rule="evenodd" fill-rule="evenodd"

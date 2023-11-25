@@ -27,7 +27,7 @@
     {{--
     <div class="container" style="margin-bottom: 15px;">
         <div class="col-lg-12 col-md-12 col-sm-12">
-            <a href="{{ route('front.makeapayment') }}" class="btn btn-accent">Make a Payment</a>
+            <a href="{{ route('front.makeapayment') }}" class="btn btn-accent">Make Online Payment</a>
         </div>
     </div>
     --}}
@@ -73,7 +73,7 @@
             <div class="col-span-2 mb-4 lg:col-span-1">
                 <h1 class="text-xl text-white font-display">Brochure</h1>
                 <img src="{{ asset('assets/front/img/nete-brochure-2020.jpg')}}" alt="" class="block w-40 mb-4">
-                <a href="#" class="inline-flex gap-2 px-3 py-2 rounded-lg bg-primary-dark">
+                <a href="https://www.gotonepal.com/downloads" class="inline-flex gap-2 px-3 py-2 rounded-lg bg-primary-dark">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m.75 12l3 3m0 0l3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"></path>
                     </svg>
@@ -152,7 +152,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ Setting::get('youtube') }}" class="flex items-center justify-center w-10 h-10 rounded-full bg-primary-dark hover:bg-[#8f5db7]">
+                        <a href="{{ Setting::get('youtube') }}" class="flex items-center justify-center w-10 h-10 rounded-full bg-primary-dark hover:bg-[#ff0000]">
                             <svg>
                                 <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#youtube" />
                             </svg>
@@ -173,7 +173,7 @@
                     <img src="{{ asset('assets/front/img/jcb.svg') }}" alt="Paypal" loading="lazy" class="h-6">
                     <img src="{{ asset('assets/front/img/maestro.svg') }}" alt="Paypal" loading="lazy" class="h-6">
                 </div>
-                <a href="#" class="text-sm">Make a payment</a>
+                <a href="#" class="text-sm">Make Online payment</a>
             </div>
             <div class="text-center">
                 <div class="mb-6 text-sm ">We are a member of</div>
@@ -197,7 +197,7 @@
             <div class="text-center">
                 <div class="mb-6 text-sm">We are associated with</div>
                 <ul class="flex flex-wrap items-center justify-center gap-4">
-                    <li><a href="#"><img loading="lazy" src="{{ asset('assets/front/img/tripadvisor.svg') }}" alt="Tripadvisor" width="179"
+                    <li><a href="https://www.tripadvisor.com/Attraction_Review-g293890-d6226789-Reviews-Nepal_Environmental_Treks_Expedition_Flight_Day_Tour-Kathmandu_Kathmandu_Valley_B.html" target="_blank"><img loading="lazy" src="{{ asset('assets/front/img/tripadvisor.svg') }}" alt="Tripadvisor" width="179"
                                 height="150" class="w-auto h-14"></a></li>
                     <li><a href="#"><img loading="lazy" src="{{ asset('assets/front/img/tourradar.svg') }}" alt="Tourradar" width="148" height="150"
                                 class="w-auto h-10"></a>
@@ -210,7 +210,7 @@
             </div>
         </div>
         <div class="container py-6 text-sm border-t border-gray-300">
-            &copy; Copyright 2008 - {{ date('Y') }}. All right Reserved to Nepal Environmental Treks and Expedition.
+            &copy; Copyright 2008 - {{ date('Y') }}. All right Reserved to Nepal Environmental Treks & Expedition.
         </div>
     </div>
 </footer><!-- Footer -->

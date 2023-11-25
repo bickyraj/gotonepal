@@ -13,8 +13,8 @@
     <meta name="keywords" content="{{ Setting::get('homePageSeo')['meta_keywords'] ?? '' }}" />
     <link rel="canonical" href="{{ url('/') }}" />
     <meta property="og:title" content="{{ Setting::get('homePageSeo')['og_title'] ?? '' }}" />
-    <meta property="og:url" content="" />
-    <meta property="og:site_name" content="@yield('meta_og_site_name', Setting::get('site_name') ?? '')" />
+    <meta property="og:url" content="https://www.gotonepal.com" />
+    <meta property="og:site_name" content="{{ Setting::get('homePageSeo')['meta_title'] ?? '' }}" />
     <meta property="og:image" content="{{ Setting::getSiteSettingImage(Setting::get('homePageSeo')['og_image'] ?? null) }}" />
     <meta property="og:description" content="{{ Setting::get('homePageSeo')['og_description'] ?? '' }}" />
     <meta property="fb:app_id" content="" />
@@ -88,7 +88,7 @@
         "@type": "SearchAction",
         "target": {
           "@type": "EntryPoint",
-          "urlTemplate": "https://query..com/search?q={search_term_string}"
+          "urlTemplate": "https://query.gotonepal.com/search?q={search_term_string}"
         },
         "query-input": "required name=search_term_string"
       }
@@ -161,6 +161,24 @@
         })
         headerScrollObserver.observe(document.querySelector('#topIO'))
     </script>
+    <!-- GetButton.io widget -->
+<script type="text/javascript">
+    (function () {
+        var options = {
+            whatsapp: "9851031532", // WhatsApp number
+            call_to_action: "Message us", // Call to action
+            button_color: "#FF6550", // Color of button
+            position: "left", // Position may be 'right' or 'left'
+            order: "whatsapp", // Order of buttons
+        };
+        var proto = 'https:', host = "getbutton.io", url = proto + '//static.' + host;
+        var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+        s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+        var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+    })();
+</script>
+<!-- /GetButton.io widget -->
+
 </body>
 
 </html>

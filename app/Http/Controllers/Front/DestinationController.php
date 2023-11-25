@@ -9,7 +9,7 @@ use App\Trip;
 
 class DestinationController extends Controller
 {
-    private $page_limit = 6;
+    private $page_limit = 30;
 
     public function index(Request $request)
     {
@@ -90,7 +90,7 @@ class DestinationController extends Controller
 		$destinations = \App\Destination::select('id', 'name')->get();
 		$activities = \App\Activity::whereHas('destinations', function($q) use ($destination) {
             $q->where('destination_id', $destination->id);
-        })->take(8)->get();
+        })->take(30)->get();
 		return view('front.destinations.show', compact('destination', 'destinations', 'activities', 'seo'));
 	}
 

@@ -21,7 +21,7 @@ class TripReview extends Model
 	        $image_url = url('/storage/trip-reviews');
 	    	return $image_url . '/' . $this->attributes['id'] . '/' . $this->attributes['image_name'];
 	    }
-	    return config('constants.default_image_url');
+	    return;
 	}
 
 	public function getThumbImageUrlAttribute()
@@ -30,7 +30,7 @@ class TripReview extends Model
 	        $image_url = url('/storage/trip-reviews');
 	    	return $image_url . '/' . $this->attributes['id'] . '/thumb_' . $this->attributes['image_name'];
 	    }
-	    return config('constants.default_image_url');
+	    return;
 	}
 
 	public function scopePublished($query)

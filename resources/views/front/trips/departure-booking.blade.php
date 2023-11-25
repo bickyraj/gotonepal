@@ -94,9 +94,9 @@
                             placeholder="No. of travellers">
                         </div>
                         <div class="form-group">
-                            <label for="">Emergency Contact *</label>
+                            <label for="">Message</label>
                             <textarea name="emergency_contact" id="" cols="30" rows="3" class="form-control"
-                            placeholder="Emergency Contact"></textarea>
+                            placeholder="Message"></textarea>
                         </div>
                     </div>
                     @include('front.elements.recaptcha')
@@ -106,15 +106,22 @@
             </div>
 
             <aside>
-                <img src="{{ $trip->mediumImageUrl }}" alt="" class="rounded-t-lg">
-                <div class="p-10 bg-gray-100 rounded-b-lg">
-                    <h2 class="mb-4 text-2xl font-display text-primary ">{{ $trip->name }}</h2>
-                    <div class="flex justify-between mb-2"><span>Duration:</span><span> {{ $trip->duration }} Days</span></div>
-                    @if($trip->offer_price)
-                        <b class="text-gray-600">US$ {{ $trip_departure->price }}</b> per person
-                    @endif
-                </div>
-            </aside>
+                    <img src="{{ $trip->imageUrl }}" alt="" class="mb-2">
+                    <div class="p-4 rounded-lg bg-light">
+                        <h2 class="text-2xl font-bold text-primary">Book {{ $trip->name }}</h2>
+                        <div class="mt-4 card-body">
+                            <p class="flex justify-between"><span>Duration:</span>{{ $trip->duration }} days</p>
+                            <p class="flex justify-between"><span>No of Travellers:</span><span><span x-text="noOfTravellers"></span> people</span></p>
+                            <p class="flex justify-between"><span>Rate:</span><span>USD <span x-text="rate.toLocaleString()"></span></span></p>
+                            <hr>
+                            <p class="flex justify-between"><span>Total amount:</span><span class="font-bold text-primary">USD <span x-text="(noOfTravellers * rate).toLocaleString()"></span></span></p>
+
+                            <p class="flex justify-between"><span>Payable Now:</span><span class="font-bold text-primary">USD <span
+                                        x-text="(noOfTravellers * rate * ((paymentType === 'half')? 0.25: 1)).toLocaleString()"></span></span></p>
+
+                        </div>
+                    </div>
+                </aside>
         </div>
     </div>
 </section>

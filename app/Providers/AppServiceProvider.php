@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Trip;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\View;
 use URL;
 
 class AppServiceProvider extends ServiceProvider

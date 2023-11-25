@@ -5,7 +5,7 @@
 <link href="./assets/vendors/bootstrap-rating-master/bootstrap-rating.css" rel="stylesheet">
 @endpush
 @section('content')
-<div class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
+<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
     <div class="row">
         <div class="col">
             <!--begin::Portlet-->
@@ -19,7 +19,7 @@
                               Edit Trip
                           </h3>
                       </div>
-                      <div class="mt-3 kt-form__actions">
+                      <div class="kt-form__actions mt-3">
                           <a href="{{ route('admin.trips.index') }}" class="btn btn-sm btn-secondary">Cancel</a>
                       </div>
                   </div>
@@ -202,37 +202,33 @@
                               <hr>
                               <div class="form-group">
                                 <label >Choose Similar Trips</label>
-                                <div style="max-height: 20rem; overflow-y:auto;">
-                                  <div class="kt-checkbox-list" style="columns: 2">
-                                    @if(iterator_count($trips))
-                                      @foreach($trips as $item_trip)
-                                      <label class="kt-checkbox kt-checkbox--brand">
-                                        <input type="checkbox" name="similar_trips[]" <?php echo ((in_array($item_trip->id, $similar_trip_ids)?'checked': '')); ?> value="{{ $item_trip->id }}"> {{ $item_trip->name }}
-                                        <span></span>
-                                      </label>
-                                      @endforeach
-                                    @else
-                                      <p>No trips added.</p>
-                                    @endif
-                                  </div>
+                                <div class="kt-checkbox-list">
+                                  @if(iterator_count($trips))
+                                    @foreach($trips as $item_trip)
+                                    <label class="kt-checkbox kt-checkbox--brand">
+                                      <input type="checkbox" name="similar_trips[]" <?php echo ((in_array($item_trip->id, $similar_trip_ids)?'checked': '')); ?> value="{{ $item_trip->id }}"> {{ $item_trip->name }}
+                                      <span></span>
+                                    </label>
+                                    @endforeach
+                                  @else
+                                    <p>No trips added.</p>
+                                  @endif
                                 </div>
                               </div>
                               <hr>
                               <div class="form-group">
                                 <label >Choose Addon Trips</label>
-                                <div style="max-height: 20rem; overflow-y:auto;">
-                                  <div class="kt-checkbox-list" style="columns: 2">
-                                    @if(iterator_count($trips))
-                                      @foreach($trips as $item_trip)
-                                      <label class="kt-checkbox kt-checkbox--brand">
-                                        <input type="checkbox" name="addon_trips[]" <?php echo ((in_array($item_trip->id, $addon_trip_ids)?'checked': '')); ?> value="{{ $item_trip->id }}"> {{ $item_trip->name }}
-                                        <span></span>
-                                      </label>
-                                      @endforeach
-                                    @else
-                                      <p>No trips added.</p>
-                                    @endif
-                                  </div>
+                                <div class="kt-checkbox-list">
+                                  @if(iterator_count($trips))
+                                    @foreach($trips as $item_trip)
+                                    <label class="kt-checkbox kt-checkbox--brand">
+                                      <input type="checkbox" name="addon_trips[]" <?php echo ((in_array($item_trip->id, $addon_trip_ids)?'checked': '')); ?> value="{{ $item_trip->id }}"> {{ $item_trip->name }}
+                                      <span></span>
+                                    </label>
+                                    @endforeach
+                                  @else
+                                    <p>No trips added.</p>
+                                  @endif
                                 </div>
                               </div>
                               <hr>
@@ -471,8 +467,8 @@
                               {{ csrf_field() }}
                               <input type="hidden" name="id" value="{{ $trip->id }}">
                               <div class="row">
-                                <div class="mb-5 col-lg-9">
-                                  <div class="mb-3 row">
+                                <div class="col-lg-9 mb-5">
+                                  <div class="row mb-3">
                                     <div class="col">
                                       <button id="add-itinerary-btn" class="btn btn-sm btn-outline-brand pull-right"><i class="flaticon2-plus"></i> Add Itinerary</button>
                                     </div>
@@ -510,7 +506,7 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  @if(iterator_count($trip->trip_galleries))
+                                  @if($trip->trip_galleries && iterator_count($trip->trip_galleries))
                                     @foreach($trip->trip_galleries as $key => $gallery)
                                     <tr>
                                         <th scope="row">{{ $key + 1 }}</th>
@@ -550,7 +546,7 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  @if(iterator_count($trip->trip_sliders))
+                                  @if($trip->trip_sliders && iterator_count($trip->trip_sliders))
                                     @foreach($trip->trip_sliders as $key => $slider)
                                     <tr>
                                         <th scope="row">{{ $key + 1 }}</th>
@@ -614,7 +610,6 @@
                             <img id="cropper-image" class="crop-img-div" src="{{ asset('img/default.gif') }}">
                         </div>
                         <input type="file" name="file" style="display: block;" accept="image/x-png,image/gif,image/jpeg" id="cropper-upload">
-                        <span>Recommended size: 1800x800</span>
                       </div>
                     </div>
                 </div>
@@ -763,7 +758,7 @@ $(function() {
     var div = '\
     <div class="form-group itinerary-group">\
       <div class="kt-timeline-v2 travel-timeline">\
-          <div class="kt-timeline-v2__items kt-padding-top-25 kt-padding-bottom-30">\
+          <div class="kt-timeline-v2__items  kt-padding-top-25 kt-padding-bottom-30">\
               <div class="kt-timeline-v2__item">\
                   <span class="kt-timeline-v2__item-time">Day <span class="day-number"><input type="number" required class="form-control form-control-sm" style="width: 83px;"></span></span>\
                   <div class="kt-timeline-v2__item-cricle">\
@@ -773,14 +768,14 @@ $(function() {
                     <div class="itinerary-block-action">\
                       <div>\
                         <button type="button" title="remove" class="btn btn-outline-danger btn-sm btn-elevate-hover btn-icon pull-right remove-itinerary"><i class="fa fa-times"></i></button>\
-                          <div title="move" class="mr-1 btn btn-outline-brand btn-sm btn-elevate-hover btn-icon pull-right move-itinerary"><i class="la la-unsorted"></i></div>\
+                          <div title="move" class="btn btn-outline-brand btn-sm btn-elevate-hover btn-icon pull-right move-itinerary mr-1"><i class="la la-unsorted"></i></div>\
                       </div>\
                     </div>\
-                    <input type="text" name="trip_itineraries[][name]" id="input-trip-name" class="mb-3 form-control form-control-sm" placeholder="Title">\
-                    <input type="text" id="input-trip-max-altitude" class="mb-3 form-control form-control-sm" placeholder="Max altitude">\
-                    <input type="text" id="input-trip-accomodation" class="mb-3 form-control form-control-sm" placeholder="Accomodation">\
-                    <input type="text" id="input-trip-meals" class="mb-3 form-control form-control-sm" placeholder="Meals">\
-                    <input type="file" id="input-trip-image" class="mb-3 form-control form-control-sm">\
+                    <input type="text" name="trip_itineraries[][name]" id="input-trip-name" class="form-control mb-3 form-control-sm" placeholder="Title">\
+                    <input type="text" id="input-trip-max-altitude" class="form-control mb-3 form-control-sm" placeholder="Max altitude">\
+                    <input type="text" id="input-trip-accomodation" class="form-control mb-3 form-control-sm" placeholder="Accomodation">\
+                    <input type="text" id="input-trip-meals" class="form-control mb-3 form-control-sm" placeholder="Meals">\
+                    <input type="file" id="input-trip-image" class="form-control mb-3 form-control-sm">\
                     <div class="itinerary-description-block">\
                       <div id="summernote-itinerary-'+n+'" class="summernote-itinerary"></div>\
                     </div>\
@@ -1270,7 +1265,7 @@ $(function() {
     	}
 
 	    cropper = new Cropper(image, {
-	        // aspectRatio: 3/2,
+	        aspectRatio: 3 / 2,
 	        zoomable: false,
 	        viewMode: 2,
 	        crop(event) {

@@ -233,7 +233,7 @@ Route::get('/system-clear-cache', function() {
     Artisan::call('route:clear');
     Artisan::call('migrate');
     // Artisan::call('db:seed');
-    // Artisan::call('storage:link');
+   //  Artisan::call('storage:link');
     return "Cache is cleared";
 });
 Route::group( ['middleware' => ['url-redirect']], function () {

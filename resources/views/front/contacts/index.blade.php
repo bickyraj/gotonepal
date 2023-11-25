@@ -26,7 +26,7 @@ if (session()->has('error_message')) {
             <div class="grid gap-10 lg:grid-cols-2 lg:gap-20">
                 <div>
                     <div class="mb-10 prose">
-                        <p>Tell us more about your interest and we will respond your query within 12 hours !</p>
+                        <?= Setting::get('contactUs')['content'] ?? '' ?>
                     </div>
                     <div class="mb-8">
                         <form id="captcha-form" action="{{ route('front.contact.store') }}" method="POST">
@@ -332,7 +332,7 @@ if (session()->has('error_message')) {
                 <aside>
                     <div class="p-10 experts-card bg-light">
                         <div class="flex mb-6 experts-phone">
-                            <a href="tel:+977 9851046017" class="flex gap-6">
+                            <a href="tel:" class="flex gap-6">
                                 <div class="flex items-center justify-center w-10 h-10 rounded bg-primary">
                                     <svg class="w-6 h-6 text-white rounded">
                                         <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#locationmarker" />
@@ -366,7 +366,7 @@ if (session()->has('error_message')) {
                                 </div>
                                 <div>
                                     <h2 class="font-bold">Write to us</h2>
-                                    {!! str_replace(['@', '.'], ['<wbr>@', '<wbr>.'], Setting::get('email') ?? '') !!}
+                                    {!! str_replace(['@', '.'], ['<wbr>@', '<wbr>.'], Setting::get('email') ?? '') !!} </br> envtrek@gmail.com </br> envtreks@gmail.com
                                 </div>
                             </a>
                         </div>
@@ -404,8 +404,8 @@ if (session()->has('error_message')) {
         </div>
     </section>
 
-    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7064.205282804139!2d85.312504!3d27.714117!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb18fd7455352f%3A0xfb9d7c23039f5f!2sNepal%20Environmental%20Treks%20and%20Expedition%20Pvt.%20Ltd.!5e0!3m2!1sen!2sus!4v1699433789541!5m2!1sen!2sus" width="100%" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    
+   <?= Setting::get('contactUs')['map'] ?? '' ?>
+   
 @endsection
 @push('scripts')
     <script type="text/javascript">

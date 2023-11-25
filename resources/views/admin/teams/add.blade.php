@@ -57,7 +57,7 @@
 </style>
 @endpush
 @section('content')
-<div class="kt-container  kt-container--fluid  kt-grid__item kt-grid__item--fluid">
+<div class="kt-container kt-container--fluid kt-grid__item kt-grid__item--fluid">
     <div class="row">
         <div class="col">
             <!--begin::Portlet-->
@@ -73,7 +73,7 @@
                             Add Team
                         </h3>
                     </div>
-                    <div class="kt-form__actions mt-3">
+                    <div class="mt-3 kt-form__actions">
                         <a href="{{ route('admin.teams.index') }}" class="btn btn-sm btn-secondary">Cancel</a>
                         <button type="submit" class="btn btn-sm btn-primary">
                               <i class="flaticon2-arrow-up"></i>
@@ -104,6 +104,7 @@
                               <option value="1">Administration</option>
                               <option value="2">Representatives</option>
                               <option value="3">Tour Guides</option>
+                              <option value="4">Other Staffs</option>
                             </select>
                         </div>
                         <div class="form-group">
