@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ba463bf56ffb511601111d7f654c2aca",
+    "content-hash": "66ee1ec274f54fa358a67a11c24b1e1e",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -71,6 +71,49 @@
                 }
             ],
             "time": "2020-09-07T11:50:18+00:00"
+        },
+        {
+            "name": "bickyraj/hbl",
+            "version": "v1.2.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bickyraj/hbl.git",
+                "reference": "515c956ce4a82eb7ea3b7bfacd3d8d04f003189e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bickyraj/hbl/zipball/515c956ce4a82eb7ea3b7bfacd3d8d04f003189e",
+                "reference": "515c956ce4a82eb7ea3b7bfacd3d8d04f003189e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openssl": "*",
+                "guzzlehttp/guzzle": "^7.0",
+                "nesbot/carbon": "^2.56",
+                "web-token/jwt-framework": "^2.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bickyraj\\Hbl\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "bicky",
+                    "email": "bickyrajkayastha@gmail.com"
+                }
+            ],
+            "description": "himalyan bank payment library",
+            "support": {
+                "issues": "https://github.com/bickyraj/hbl/issues",
+                "source": "https://github.com/bickyraj/hbl/tree/v1.2.6"
+            },
+            "time": "2023-05-16T21:16:52+00:00"
         },
         {
             "name": "bickyraj/toc",
