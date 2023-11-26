@@ -91,6 +91,18 @@ class HomeController extends Controller
                 $message->from($request->email);
                 $message->subject('Enquiry');
             });
+
+            // booking email to customer
+            Mail::send('emails.contact-response', ['body' => [
+                'email' => $request->email,
+                'name' => $request->name,
+            ]], function ($message) use ($request) {
+                $message->to($request->email);
+                // $message->from(Setting::get('email'));
+                $message->from(Setting::get('email'));
+                $message->subject('Go to Nepal: request on the way!');
+            });
+
             session()->flash('success_message', "Thank you for your enquiry. We'll contact you very soon.");
             $prev_route = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
 
@@ -282,6 +294,17 @@ class HomeController extends Controller
         $invoice = Invoice::where('ref_id', $request->orderNo)->first();
         $invoice->status = Invoice::PAID;
         $invoice->save();
+        // booking email to customer
+        Mail::send('emails.booking-thank-you', ['body' => [
+            'email' => $invoice->email,
+            'trip_name' => $invoice->trip_name,
+            'full_name' => $invoice->full_name,
+        ]], function ($message) use ($invoice) {
+            $message->to($invoice->email);
+            // $message->from(Setting::get('email'));
+            $message->from("info@gotonepal.com");
+            $message->subject('Trip Booking Successfull');
+        });
         Session::flash('success_message', 'Payment successfull.');
         return redirect()->route('home');
     }
