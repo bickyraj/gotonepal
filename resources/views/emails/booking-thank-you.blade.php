@@ -4,7 +4,7 @@
 	<title>{{ config('app.name') }}</title>
 </head>
 <body>
-	<h3>Dear {{ $body['full_name'] }}</h3>
+	<h3>Dear {{ $body['full_name'] }},</h3>
 
 	<p>
         Thank you for booking your trip "{{ $body['trip_name'] }}" with us! We're thrilled to have you on board and look forward to providing you with a memorable experience.</p>
