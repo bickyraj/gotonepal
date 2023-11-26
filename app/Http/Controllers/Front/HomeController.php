@@ -316,7 +316,7 @@ class HomeController extends Controller
         $invoice->status = Invoice::PAID;
         $invoice->save();
         // booking email to customer
-        Mail::send('emails.booking-thank-you', ['body' => [
+        Mail::send('emails.payment_successful', ['body' => [
             'email' => $invoice->email,
             'trip_name' => $invoice->trip_name,
             'full_name' => $invoice->full_name,
