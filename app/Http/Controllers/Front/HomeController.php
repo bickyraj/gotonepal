@@ -159,61 +159,82 @@ class HomeController extends Controller
     {
         try {
             $trip = Trip::find($request->id);
-            // save data to database.
-            $invoice = new Invoice();
-            $latest_invoice = DB::table('invoices')->latest('id')->first();
-            $last_id = $latest_invoice ? $latest_invoice->id : 1;
-            $invoice_number = str_pad($last_id, 5, "0", STR_PAD_LEFT);
-            $invoice_id = 'IV-' . $invoice_number;
-            $invoice->invoice_id = $invoice_id;
-            $invoice->full_name = $request->first_name;
-            // price is 25% of the booking amount
-            $trip_offer_price = floatval($trip->offer_price);
-            $trip_cost_price = floatval($trip->cost);
-            $trip_price = ($trip_offer_price != 0) ? $trip_offer_price : $trip_cost_price;
+            // send email to customer
+            Mail::send('emails.booking-thank-you',
+                ['body' => [
+                    'email' => $request->email,
+                    'trip_name' => $trip->name,
+                    'full_name' => $request->first_name,
+                ]],
+                function ($message) use ($request) {
+                    $message->to($request->email);
+                    $message->from(Setting::get('email'));
+                    $message->subject('Trip Booking Successfull');
+                }
+            );
 
-            $trip_rate = 0.25;
-            if ($request->payment_type == "full") {
-                $trip_rate = 1;
-            }
-            $price_after_percent = $trip_rate * $trip_price * intval($request->no_of_travellers);
-            $invoice->amount = $price_after_percent;
-            $invoice->price = $price_after_percent;
-            $invoice->trip_name = $trip->name;
-            $invoice->email = $request->email;
-            $invoice->contact_number = $request->contact_no;
-            $invoice->ref_id = $invoice_number;
-            $invoice->save();
+            if ((isset($trip->cost) && !empty($trip->cost)) ||
+             (isset($trip->offer_price) && !empty($trip->offer_price)) ) {
+                 // save data to database.
+                 $invoice = new Invoice();
+                 $latest_invoice = DB::table('invoices')->latest('id')->first();
+                 $last_id = $latest_invoice ? $latest_invoice->id : 1;
+                 $invoice_number = str_pad($last_id, 5, "0", STR_PAD_LEFT);
+                 $invoice_id = 'IV-' . $invoice_number;
+                 $invoice->invoice_id = $invoice_id;
+                 $invoice->full_name = $request->first_name;
+                 // price is 25% of the booking amount
+                 $trip_offer_price = floatval($trip->offer_price);
+                 $trip_cost_price = floatval($trip->cost);
+                 $trip_price = ($trip_offer_price != 0) ? $trip_offer_price : $trip_cost_price;
 
-            // payment
-            $payment = [];
-            $payment['formID'] = config('hbl.OfficeId');
-            $payment['api_key'] = config('hbl.AccessToken');
-            $payment['input_currency'] = config('hbl.InputCurrencty');
-            $payment['merchant_id'] = config('hbl.OfficeId');
-            $payment['input_amount'] = $invoice->amount;
-            $payment['input_3d'] = config('hbl.Input3DS');
-            $payment['simple_spc'] = config('hbl.OfficeId');
-            $payment['fail_url'] = route('hbl.payment.failed');
-            $payment['cancel_url'] = route('hbl.payment.canceled');
-            $payment['success_url'] = route('front.payment.callback', ['invoceId' => $invoice->invoice_id]);
-            $payment['backend_url'] = route('home');
-            $payment['invoiceNo'] = $invoice->invoice_id;
-            $payment['ref_id'] = $invoice->ref_id;
-            //echo "Payment jose request \n ";
-            $paymentObj = [
-                "order_no" => $payment['ref_id'],
-                "amount" => $payment['input_amount'],
-                "success_url" => $payment['success_url'],
-                "failed_url" => $payment['fail_url'],
-                "cancel_url" => $payment['cancel_url'],
-                "backend_url" => $payment['backend_url'],
-                "custom_fields" => [
-                    'RefID' => $payment['ref_id']
-                ],
-            ];
+                 $trip_rate = 0.25;
+                 if ($request->payment_type == "full") {
+                     $trip_rate = 1;
+                 }
+                 $price_after_percent = $trip_rate * $trip_price * intval($request->no_of_travellers);
+                 $invoice->amount = $price_after_percent;
+                 $invoice->price = $price_after_percent;
+                 $invoice->trip_name = $trip->name;
+                 $invoice->email = $request->email;
+                 $invoice->contact_number = $request->contact_no;
+                 $invoice->ref_id = $invoice_number;
+                 $invoice->save();
 
-            HblPayment::pay($paymentObj);
+                 // payment
+                 $payment = [];
+                 $payment['formID'] = config('hbl.OfficeId');
+                 $payment['api_key'] = config('hbl.AccessToken');
+                 $payment['input_currency'] = config('hbl.InputCurrencty');
+                 $payment['merchant_id'] = config('hbl.OfficeId');
+                 $payment['input_amount'] = $invoice->amount;
+                 $payment['input_3d'] = config('hbl.Input3DS');
+                 $payment['simple_spc'] = config('hbl.OfficeId');
+                 $payment['fail_url'] = route('hbl.payment.failed');
+                 $payment['cancel_url'] = route('hbl.payment.canceled');
+                 $payment['success_url'] = route('front.payment.callback', ['invoceId' => $invoice->invoice_id]);
+                 $payment['backend_url'] = route('home');
+                 $payment['invoiceNo'] = $invoice->invoice_id;
+                 $payment['ref_id'] = $invoice->ref_id;
+                 //echo "Payment jose request \n ";
+                 $paymentObj = [
+                     "order_no" => $payment['ref_id'],
+                     "amount" => $payment['input_amount'],
+                     "success_url" => $payment['success_url'],
+                     "failed_url" => $payment['fail_url'],
+                     "cancel_url" => $payment['cancel_url'],
+                     "backend_url" => $payment['backend_url'],
+                     "custom_fields" => [
+                         'RefID' => $payment['ref_id']
+                     ],
+                 ];
+
+                 HblPayment::pay($paymentObj);
+             } else {
+                session()->flash('success_message', "Thank you for your Booking. We'll contact you very soon.");
+                return redirect()->back();
+             }
+
         } catch (\Throwable $th) {
             \Log::info($th->getMessage());
             return redirect()->back();
@@ -301,8 +322,7 @@ class HomeController extends Controller
             'full_name' => $invoice->full_name,
         ]], function ($message) use ($invoice) {
             $message->to($invoice->email);
-            // $message->from(Setting::get('email'));
-            $message->from("info@gotonepal.com");
+            $message->from(Setting::get('email'));
             $message->subject('Trip Booking Successfull');
         });
         Session::flash('success_message', 'Payment successfull.');
