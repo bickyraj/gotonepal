@@ -26,7 +26,8 @@ if (session()->has('error_message')) {
                             <li class="inline"><a href="" aria-current="page">Book</a></li>
                         </ol>
                     </nav>
-                    <form id="captcha-form" action="{{ route('front.trips.booking.store') }}" method="POST">
+                    {{-- <form id="captcha-form" action="{{ route('front.trips.booking.store') }}" method="POST"> --}}
+                    <form id="captcha-form" action="{{ route('front.store_payment') }}" method="POST">
                         @csrf
                         <input type="hidden" name="id" value="{{ $trip->id }}">
                         <h2 class="mb-2 text-xl font-bold text-primary">Personal details</h2>
