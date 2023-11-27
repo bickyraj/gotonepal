@@ -180,7 +180,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
         App\Providers\SettingServiceProvider::class,
-        // Bickyraj\Toc\TocServiceProvider::class,
+        Bickyraj\Toc\TocServiceProvider::class,
     ],
 
     /*

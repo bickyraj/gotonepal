@@ -173,6 +173,13 @@ class HomeController extends Controller
                 }
             );
 
+            // email to admin
+            Mail::send('emails.booking', ['body' => $request, 'trip_name' => $trip->name], function ($message) use ($request) {
+                $message->to(Setting::get('email'));
+                $message->from($request->email);
+                $message->subject('New Booking');
+            });
+
             if ((isset($trip->cost) && !empty($trip->cost)) ||
              (isset($trip->offer_price) && !empty($trip->offer_price)) ) {
                  // save data to database.
