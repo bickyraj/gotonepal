@@ -174,6 +174,9 @@
                     <img src="{{ asset('assets/front/img/maestro.svg') }}" alt="Paypal" loading="lazy" class="h-6">
                 </div>
                 <a href="#" class="text-sm">Make Online payment</a>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <a href="{{ route('front.makeapayment') }}" class="btn btn-sm btn-accent">Make a Payment</a>
+                </div>
             </div>
             <div class="text-center">
                 <div class="mb-6 text-sm ">We are a member of</div>

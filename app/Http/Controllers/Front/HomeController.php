@@ -294,6 +294,29 @@ class HomeController extends Controller
                     'RefID' => $payment['ref_id']
                 ],
             ];
+
+            // send email to customer
+            Mail::send(
+                'emails.booking-thank-you',
+                ['body' => [
+                    'email' => $request->email,
+                    'trip_name' => $request->trip_name,
+                    'full_name' => $request->first_name,
+                ]],
+                function ($message) use ($request) {
+                    $message->to($request->email);
+                    $message->from(Setting::get('email'));
+                    $message->subject('Trip Booking Successfull');
+                }
+            );
+
+            // email to admin
+            Mail::send('emails.payment-footer', ['body' => $request, 'trip_name' => $request->trip_name], function ($message) use ($request) {
+                $message->to(Setting::get('email'));
+                $message->from($request->email);
+                $message->subject('New Booking');
+            });
+
             HblPayment::pay($paymentObj);
         } catch (\Throwable $th) {
             \Log::info($th->getMessage());
