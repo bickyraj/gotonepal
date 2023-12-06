@@ -41,11 +41,15 @@ if (session()->has('error_message')) {
                             </div>
                             <div class="mb-4 form-group">
                                 <label for="start-date" class="text-sm">Start Date</label>
-                                <input type="date" name="start_date" required class="form-control" id="start-date" placeholder="">
+                                <input type="date" name="start_date" class="form-control" id="start-date" placeholder="">
                             </div>
                             <div class="mb-4 form-group">
                                 <label for="end-date" class="text-sm">End Date</label>
-                                <input type="date" name="end_date" required class="form-control" id="end-date" placeholder="">
+                                <input type="date" name="end_date" class="form-control" id="end-date" placeholder="">
+                            </div>
+                            <div class="mb-4 form-group">
+                                <label for="no-of-traveller" class="text-sm">No. of Traveller</label>
+                                <input type="number" name="no_of_traveller" class="form-control" id="no-of-traveller" placeholder="">
                             </div>
                             <div class="mb-4 form-group">
                                 <label for="email" class="text-sm">E-mail</label>
@@ -60,13 +64,7 @@ if (session()->has('error_message')) {
                             </div>
                             <div class="mb-4 form-group">
                                 <label for="country" class="text-sm">Country</label>
-                                {{-- <div class="flex">
-                                <div class="flex items-center justify-center px-2 bg-primary">
-                                    <svg class="w-4 h-4 text-white">
-                                        <use xlink:href="{{ asset('assets/front/img/sprite.svg') }}#flag" />
-                                    </svg>
-                                </div> --}}
-                                <input name="" id="country" required name="country" class="form-control" list="countries" placeholder="Country">
+                                <input id="country" required name="country" class="form-control" list="countries" placeholder="Country">
                                 {{-- </div> --}}
                             </div>
                             <div class="mb-4 form-group">
