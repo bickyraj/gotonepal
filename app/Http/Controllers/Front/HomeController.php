@@ -382,4 +382,53 @@ class HomeController extends Controller
     {
         return view('front.payment.payment');
     }
+
+    public function enquiry()
+    {
+        return view('front.contacts.inquiry');
+    }
+
+    public function enquiryStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required'
+        ]);
+        $verifiedRecaptcha = RecaptchaService::verifyRecaptcha($request->get('g-recaptcha-response'));
+
+        if (!$verifiedRecaptcha) {
+            session()->flash('error_message', 'Google recaptcha error.');
+            return redirect()->back();
+        }
+
+        try {
+            $request->merge([
+                'ip_address' => $request->ip()
+            ]);
+            Mail::send('emails.contact', ['body' => $request], function ($message) use ($request) {
+                $message->to(Setting::get('email'));
+                $message->from($request->email);
+                $message->subject('Enquiry');
+            });
+
+            // booking email to customer
+            Mail::send('emails.contact-response', ['body' => [
+                'email' => $request->email,
+                'name' => $request->name,
+            ]], function ($message) use ($request) {
+                $message->to($request->email);
+                $message->from(Setting::get('email'));
+                $message->subject('Go to Nepal: request on the way!');
+            });
+
+            session()->flash('success_message', "Thank you for your enquiry. We'll contact you very soon.");
+
+            if ($request->redirect_url) {
+                return redirect()->to($request->redirect_url);
+            }
+        } catch (\Exception $e) {
+            Log::info($e->getMessage());
+            session()->flash('error_message', __('alerts.save_error'));
+        }
+        return redirect()->route('front.contact.index');
+    }
 }
