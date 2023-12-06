@@ -14,7 +14,7 @@ if (session()->has('error_message')) {
 
     {{-- Hero --}}
     @include('front.elements.hero', [
-        'title' => 'Enquiry',
+        'title' => 'Inquiry',
         'image' => asset('assets/front/img/hero.jpg'),
         'breadcrumbs' => [
             'Home' => route('home'),
@@ -26,7 +26,7 @@ if (session()->has('error_message')) {
             <div class="grid gap-10 lg:grid-cols-2 lg:gap-20">
                 <div>
                     <div class="mb-8">
-                        <form id="captcha-form" action="{{ route('front.enquiry.store') }}" method="POST">
+                        <form id="captcha-form" action="{{ route('front.inquiry.store') }}" method="POST">
                             @csrf
                             <div class="mb-4 form-group">
                                 <label for="name" class="text-sm">Name</label>

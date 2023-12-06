@@ -89,7 +89,7 @@ class HomeController extends Controller
             Mail::send('emails.contact', ['body' => $request], function ($message) use ($request) {
                 $message->to(Setting::get('email'));
                 $message->from($request->email);
-                $message->subject('Enquiry');
+                $message->subject('Inquiry');
             });
 
             // booking email to customer
@@ -103,7 +103,7 @@ class HomeController extends Controller
                 $message->subject('Go to Nepal: request on the way!');
             });
 
-            session()->flash('success_message', "Thank you for your enquiry. We'll contact you very soon.");
+            session()->flash('success_message', "Thank you for your inquiry. We'll contact you very soon.");
             $prev_route = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
 
             if ($request->redirect_url) {
@@ -383,12 +383,12 @@ class HomeController extends Controller
         return view('front.payment.payment');
     }
 
-    public function enquiry()
+    public function inquiry()
     {
         return view('front.contacts.inquiry');
     }
 
-    public function enquiryStore(Request $request)
+    public function inquiryStore(Request $request)
     {
         $request->validate([
             'name' => 'required'
@@ -407,7 +407,7 @@ class HomeController extends Controller
             Mail::send('emails.contact', ['body' => $request], function ($message) use ($request) {
                 $message->to(Setting::get('email'));
                 $message->from($request->email);
-                $message->subject('Enquiry');
+                $message->subject('Inquiry');
             });
 
             // booking email to customer
@@ -420,7 +420,7 @@ class HomeController extends Controller
                 $message->subject('Go to Nepal: request on the way!');
             });
 
-            session()->flash('success_message', "Thank you for your enquiry. We'll contact you very soon.");
+            session()->flash('success_message', "Thank you for your inquiry. We'll contact you very soon.");
 
             if ($request->redirect_url) {
                 return redirect()->to($request->redirect_url);
@@ -429,6 +429,6 @@ class HomeController extends Controller
             Log::info($e->getMessage());
             session()->flash('error_message', __('alerts.save_error'));
         }
-        return redirect()->route('front.contact.index');
+        return redirect()->route('front.contact.inquiry');
     }
 }

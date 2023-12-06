@@ -263,8 +263,8 @@ Route::group( ['middleware' => ['url-redirect']], function () {
     Route::get('/faqs', 'Front\HomeController@faqs')->name('front.faqs.index');
     Route::get('/contact-us', 'Front\HomeController@contact')->name('front.contact.index');
     Route::post('/contact', 'Front\HomeController@contactStore')->name('front.contact.store');
-    Route::get('/enquiry', 'Front\HomeController@enquiry')->name('front.contact.enquiry');
-    Route::post('/enquiry', 'Front\HomeController@enquiryStore')->name('front.enquiry.store');
+    Route::get('/inquiry', 'Front\HomeController@inquiry')->name('front.contact.inquiry');
+    Route::post('/inquiry', 'Front\HomeController@inquiryStore')->name('front.inquiry.store');
 
     // review routes
     Route::get('/reviews', 'Front\HomeController@reviews')->name('front.reviews.index');
