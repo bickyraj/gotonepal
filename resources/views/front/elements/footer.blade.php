@@ -10,9 +10,9 @@
             <div>
                 <form class="flex flex-col justify-center gap-4 md:flex-row" id="email-subscribe-form">
                     <label for="namsube" class="sr-only">Name</label>
-                    <input type="text" id="namesub" class="w-full p-4 border-gray-300 rounded-lg" placeholder="Your full name" required>
+                    <input type="text" id="namesub" class="w-full p-4 border-gray-300 rounded-lg" name="name" placeholder="Your full name" required>
                     <label for="emailsub" class="sr-only">Email</label>
-                    <input type="email" id="emailsub" class="w-full p-4 border-gray-300 rounded-lg" placeholder="Your email" required>
+                    <input type="email" required id="emailsub" class="w-full p-4 border-gray-300 rounded-lg" name="email" placeholder="Your email" required>
                     <button type="submit" class="block btn btn-accent">Subscribe</button>
                 </form>
             </div>
@@ -173,9 +173,8 @@
                     <img src="{{ asset('assets/front/img/jcb.svg') }}" alt="Paypal" loading="lazy" class="h-6">
                     <img src="{{ asset('assets/front/img/maestro.svg') }}" alt="Paypal" loading="lazy" class="h-6">
                 </div>
-                <a href="#" class="text-sm">Make Online payment</a>
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    <a href="{{ route('front.makeapayment') }}" class="btn btn-sm btn-accent">Make a Payment</a>
+                    <a href="{{ route('front.makeapayment') }}" class="btn btn-sm btn-accent">Make Online Payment</a>
                 </div>
             </div>
             <div class="text-center">

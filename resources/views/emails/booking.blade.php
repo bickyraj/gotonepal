@@ -17,5 +17,6 @@
     no of traveller: {{ $body['no_of_travellers'] }} <br/>
     emergency contact: {{ $body['emergency_contact'] }} <br/>
     payment type: {{ $body['payment_type'] }} <br/>
+    IP Address: <a href="https://www.ip2location.com/demo/{{ $body['ip_address'] }}">{{ $body['ip_address'] }}</a>
 </body>
 </html>

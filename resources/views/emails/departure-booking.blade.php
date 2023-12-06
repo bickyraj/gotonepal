@@ -27,6 +27,6 @@
 	Emergency Contact: {{ $body['emergency_contact'] }} <br>
 
 	<h4>Traveller Information</h4>
-	IP Address: {{ $body['ip_address'] }}
+	IP Address: <a href="https://www.ip2location.com/demo/{{ $body['ip_address'] }}">{{ $body['ip_address'] }}</a>
 </body>
 </html>
